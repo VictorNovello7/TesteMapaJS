@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BEFARM - Wade Brasil</title>
+    <meta name="description" content="Conheça a BEFARM da Wade Brasil. Suplementos alimentares, cafés especiais e alimentação saudável com biotecnologia de alta performance.">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Stylesheet -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- Header / Cabeçalho BEFARM (Fundo Verde, Botão Home Roxo/Rosa) -->
+    <header class="brand-header befarm-header">
+        <div class="header-container">
+            <a href="index.html" class="logo">
+                <img src="imgs/logo-wade.webp" alt="Wade Brasil" class="logo-img" width="140" height="45">
+            </a>
+            
+            <!-- Menu de Marcas no Centro -->
+            <nav class="brand-nav-menu">
+                <ul>
+                    <li><a href="index.html" class="brand-nav-link">Wade Brasil</a></li>
+                    <li><a href="befarm.html" class="brand-nav-link active">BEFARM</a></li>
+                    <li><a href="bluesafe.html" class="brand-nav-link">BlueSafe</a></li>
+                </ul>
+            </nav>
+
+            <div class="header-actions">
+                <a href="index.html" class="btn-home-brand" id="btn-home-befarm">Home</a>
+                <button class="mobile-toggle" id="mobile-toggle" aria-label="Abrir Menu">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Seção Banner Hero BEFARM (Aspect Ratio travada) -->
+    <section class="brand-hero-section">
+        <div class="brand-banner befarm-banner" style="background-image: url('imgs/fundo beefarm.png');"></div>
+    </section>
+
+    <!-- Seção de Produtos BEFARM (Fundo Verde, Abas interativas) -->
+    <section class="brand-products-section befarm-products">
+        <div class="brand-products-container" id="befarm-container-bg">
+            <div class="products-flex">
+                <!-- Imagem do Produto (Esquerda) -->
+                <div class="product-image-side animate-fade">
+                    <div class="brand-product-image-container">
+                        <img src="imgs/befarm_cafe.png" alt="Café Especial BEFARM" class="brand-product-img" id="befarm-product-img">
+                    </div>
+                </div>
+
+                <!-- Conteúdo do Produto (Direita) -->
+                <div class="product-text-side animate-fade">
+                    <h2 class="product-title" id="befarm-product-title">CAFÉ ESPECIAL ALTA MOGIANA</h2>
+                    <p class="product-description" id="befarm-product-desc">
+                        O BEFARM Origens Alta Mogiana é um café especial de grãos 100% arábica cultivado na tradicional região da Alta Mogiana. Com notas sensoriais de chocolate amargo, caramelo e frutas secas, este microlote selecionado de torra média apresenta corpo aveludado, acidez brilhante e doçura natural marcante. Rastreável da fazenda até a xícara.
+                    </p>
+                </div>
+            </div>
+            
+            <!-- Barra de Abas (Menu do Tab) -->
+            <div class="tabs-bar brand-tabs-bar">
+                <button id="botaoooo" class="brand-tab-btn" data-tab="polivitaminas">Polivitaminas</button>
+                <button id="botaoooo" class="brand-tab-btn active" data-tab="origem">Origem</button>
+                <button id="botaoooo" class="brand-tab-btn" data-tab="creatina">Creatina</button>
+                <button id="botaoooo" class="brand-tab-btn" data-tab="biscoito">Biscoito</button>
+                <a href="app.html" id="botaoooo"  class="brand-tab-btn link-outros-befarm" style="display: flex; align-items: center; justify-content: center; text-decoration: none;">Outros...</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Seção Trajetória BEFARM -->
+    <section class="brand-history-section befarm-history">
+        <div class="brand-history-container">
+            <h2 class="brand-history-title">Nossa Trajetória</h2>
+            <p class="brand-history-text">
+                A trajetória da BeFarm está ligada à própria origem da Wade em 2019, quando a empresa deu seus primeiros passos no mercado focando na área de nutrição e qualidade de vida. Após anos de crescimento e investimentos em pesquisa, a marca foi oficialmente fundada em 2025 para assumir com exclusividade o pilar de nutrição, bem-estar e produtos de origem natural do grupo. Em 2026, com a parceria firmada com o Biopark, a BeFarm ganhou um forte impulso estrutural focado em pesquisa e desenvolvimento tecnológico.
+            </p>
+        </div>
+    </section>
+
+    <!-- Rodapé / Footer BEFARM (Fundo Verde) -->
+    <footer class="brand-footer befarm-footer">
+        <div class="footer-container">
+            <!-- Lado Esquerdo: Logo -->
+            <div class="footer-brand">
+                <img src="imgs/logo-wade.webp" alt="Wade Brasil" class="footer-logo-img" width="140" height="45">
+            </div>
+
+            <!-- Lado Central: Contatos -->
+            <div class="footer-contacts">
+                <h4 class="footer-title">Contatos:</h4>
+                <ul>
+                    <li><i class="fa-solid fa-phone"></i> (54) 3601-5330</li>
+                    <li><i class="fa-brands fa-instagram"></i> wade.brasil</li>
+                    <li><i class="fa-solid fa-envelope"></i> grupo.wade@gmail.com</li>
+                </ul>
+            </div>
+
+            <!-- Lado Direito: Links de Páginas -->
+            <div class="footer-pages">
+                <h4 class="footer-title">Páginas</h4>
+                <ul>
+                    <li><a href="index.html#marcas">Marcas</a></li>
+                    <li><a href="index.html#produtos">Produtos</a></li>
+                    <li><a href="index.html#historia">História</a></li>
+                    <li><a href="index.html#duvidas">Dúvidas</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 Wade. Todos os direitos reservados.</p>
+        </div>
+    </footer>
+
+    <!-- JavaScript para controle de abas e toggle -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Mobile Menu
+            const mobileToggle = document.getElementById('mobile-toggle');
+            const navMenu = document.querySelector('.brand-nav-menu');
+            if (mobileToggle && navMenu) {
+                mobileToggle.addEventListener('click', () => {
+                    mobileToggle.classList.toggle('active');
+                    navMenu.classList.toggle('active');
+                });
+            }
+
+            // Products data
+            const productsData = {
+                'polivitaminas': {
+                    title: 'SUPLEMENTO POLIVITAMÍNICO',
+                    desc: 'O Polivitamínico BEFARM é um suplemento alimentar desenvolvido com vitaminas e minerais essenciais para fortalecer o sistema imunológico, aumentar a vitalidade e garantir o bom funcionamento do organismo. Ideal para complementar a nutrição diária de forma equilibrada.'
+                },
+                'origem': {
+                    title: 'CAFÉ ESPECIAL ALTA MOGIANA',
+                    desc: 'O BEFARM Origens Alta Mogiana é um café especial de grãos 100% arábica cultivado na tradicional região da Alta Mogiana. Com notas sensoriais de chocolate amargo, caramelo e frutas secas, este microlote selecionado de torra média apresenta corpo aveludado, acidez brilhante e doçura natural marcante. Rastreável da fazenda até a xícara.'
+                },
+                'creatina': {
+                    title: 'CREATINA MONOHIDRATADA',
+                    desc: 'A Creatina 100% Pura BEFARM auxilia no aumento do desempenho físico durante exercícios repetidos de curta duração e alta intensidade. Formulado com matéria-prima premium para máxima absorção, ganho de força e recuperação muscular acelerada.'
+                },
+                'biscoito': {
+                    title: 'BISCOITOS INTEGRAIS BEFARM',
+                    desc: 'Nossos biscoitos e mini crackers integrais são elaborados com cereais nobres e ingredientes 100% naturais. Uma opção deliciosa, crocante e saudável para seus lanches intermediários, rica em fibras e livre de conservantes artificiais.'
+                },
+                'outros': {
+                    title: 'OUTROS PRODUTOS BEFARM',
+                    desc: 'Conheça nossas soluções completas voltadas para alimentação saudável e bem-estar, incluindo chás funcionais, suplementos proteicos e snacks saudáveis que combinam nutrição, praticidade e sabor irresistível.'
+                }
+            };
+
+            const tabBtns = document.querySelectorAll('.brand-tab-btn');
+            const productTitle = document.getElementById('befarm-product-title');
+            const productDesc = document.getElementById('befarm-product-desc');
+            const flexContainer = document.querySelector('.products-flex');
+
+            tabBtns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    tabBtns.forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+
+                    const tabName = btn.dataset.tab;
+                    const data = productsData[tabName];
+
+                    if (data) {
+                        flexContainer.style.opacity = '0';
+                        flexContainer.style.transform = 'translateY(10px)';
+
+                        setTimeout(() => {
+                            productTitle.innerText = data.title;
+                            productDesc.innerText = data.desc;
+                            flexContainer.style.opacity = '1';
+                            flexContainer.style.transform = 'translateY(0)';
+                        }, 250);
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>

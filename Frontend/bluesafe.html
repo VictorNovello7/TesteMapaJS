@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BlueSafe - Wade Brasil</title>
+    <meta name="description" content="Conheça a BlueSafe da Wade Brasil. Detergentes enzimáticos de alta performance e cuidados para as suas roupas com biotecnologia avançada.">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Stylesheet -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- Header / Cabeçalho BlueSafe (Fundo Preto, Botão Home Roxo) -->
+    <header class="brand-header bluesafe-header">
+        <div class="header-container">
+            <a href="index.html" class="logo">
+                <img src="imgs/logo-wade.webp" alt="Wade Brasil" class="logo-img" width="140" height="45">
+            </a>
+            
+            <!-- Menu de Marcas no Centro -->
+            <nav class="brand-nav-menu">
+                <ul>
+                    <li><a href="index.html" class="brand-nav-link">Wade Brasil</a></li>
+                    <li><a href="befarm.html" class="brand-nav-link">BEFARM</a></li>
+                    <li><a href="bluesafe.html" class="brand-nav-link active">BlueSafe</a></li>
+                </ul>
+            </nav>
+
+            <div class="header-actions">
+                <a href="index.html" class="btn-home-brand" id="btn-home-bluesafe">Home</a>
+                <button class="mobile-toggle" id="mobile-toggle" aria-label="Abrir Menu">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Seção Banner Hero BlueSafe (Aspect Ratio travada) -->
+    <section class="brand-hero-section">
+        <div class="brand-banner bluesafe-banner" style="background-image: url('imgs/fundo bluesafe.png');"></div>
+    </section>
+
+    <!-- Seção de Produtos BlueSafe (Fundo Grafite/Preto, Abas interativas) -->
+    <section class="brand-products-section bluesafe-products">
+        <div class="brand-products-container" id="bluesafe-container-bg">
+            <div class="products-flex">
+                <!-- Imagem do Produto (Esquerda) -->
+                <div class="product-image-side animate-fade">
+                    <div class="brand-product-image-container">
+                        <img src="imgs/bluesafe_detergente.png" alt="Detergente BlueSafe" class="brand-product-img" id="bluesafe-product-img">
+                    </div>
+                </div>
+
+                <!-- Conteúdo do Produto (Direita) -->
+                <div class="product-text-side animate-fade">
+                    <h2 class="product-title" id="bluesafe-product-title">LAVA ROUPAS ENZIMÁTICO</h2>
+                    <p class="product-description" id="bluesafe-product-desc">
+                        O BlueSafe Lava Roupas Enzimático é um detergente líquido desenvolvido com tecnologia enzimática de alta performance, proporcionando uma limpeza profunda e eficiente para diferentes tipos de tecidos. Sua fórmula avançada atua diretamente na remoção de sujeiras e manchas, preservando as cores e a qualidade das roupas mesmo após diversas lavagens.
+                    </p>
+                </div>
+            </div>
+            
+            <!-- Barra de Abas (Menu do Tab) -->
+            <div class="tabs-bar brand-tabs-bar">
+                <button class="brand-tab-btn" data-tab="alcool">Álcool</button>
+                <button class="brand-tab-btn active" data-tab="enzimatico">Enzimático</button>
+                <button class="brand-tab-btn" data-tab="shampoo">Shampoo</button>
+                <a href="app.html" class="brand-tab-btn brand-tab-btn-outros">Outros...</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Seção Trajetória BlueSafe -->
+    <section class="brand-history-section bluesafe-history">
+        <div class="brand-history-container">
+            <h2 class="brand-history-title">Nossa Trajetória</h2>
+            <p class="brand-history-text">
+                A BlueSafe nasceu da expansão de mercado e da diversificação dos negócios da Wade, que ao longo dos anos estendeu sua atuação além da nutrição, passando a pesquisar soluções de limpeza. Em 2025, diante do crescimento da operação, a marca foi oficialmente criada com o objetivo de capitanear o segmento de soluções inteligentes de limpeza e cuidados com o ambiente. A partir de 2026, com a entrada do grupo no ecossistema do Biopark, a BlueSafe passou a contar com uma base sólida para a industrialização e a expansão sustentável de seus produtos.
+            </p>
+        </div>
+    </section>
+
+    <!-- Rodapé / Footer BlueSafe (Fundo Preto) -->
+    <footer class="brand-footer bluesafe-footer">
+        <div class="footer-container">
+            <!-- Lado Esquerdo: Logo -->
+            <div class="footer-brand">
+               <img src="imgs/logo-wade.webp" alt="Wade Brasil" class="logo-img" width="140" height="45">
+            </div>
+
+            <!-- Lado Central: Contatos -->
+            <div class="footer-contacts">
+                <h4 class="footer-title">Contatos:</h4>
+                <ul>
+                    <li><i class="fa-solid fa-phone"></i> (54) 3601-5330</li>
+                    <li><i class="fa-brands fa-instagram"></i> wade.brasil</li>
+                    <li><i class="fa-solid fa-envelope"></i> grupo.wade@gmail.com</li>
+                </ul>
+            </div>
+
+            <!-- Lado Direito: Links de Páginas -->
+            <div class="footer-pages">
+                <h4 class="footer-title">Páginas</h4>
+                <ul>
+                    <li><a href="index.html#marcas">Marcas</a></li>
+                    <li><a href="index.html#produtos">Produtos</a></li>
+                    <li><a href="index.html#historia">História</a></li>
+                    <li><a href="index.html#duvidas">Dúvidas</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 Wade. Todos os direitos reservados.</p>
+        </div>
+    </footer>
+
+    <!-- JavaScript para controle de abas e toggle -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Mobile Menu
+            const mobileToggle = document.getElementById('mobile-toggle');
+            const navMenu = document.querySelector('.brand-nav-menu');
+            if (mobileToggle && navMenu) {
+                mobileToggle.addEventListener('click', () => {
+                    mobileToggle.classList.toggle('active');
+                    navMenu.classList.toggle('active');
+                });
+            }
+
+            // Products data
+            const productsData = {
+                'álcool': {
+                    title: 'LAVA ROUPAS COM ÁLCOOL',
+                    desc: 'O BlueSafe Lava Roupas com Álcool combina o poder de limpeza profunda da fórmula enzimática com a ação higienizadora do álcool. Ideal para roupas esportivas, toalhas e lençóis, proporciona eliminação de odores e limpeza de alta performance com secagem rápida e aroma de verbena fresca.'
+                },
+                'enzimático': {
+                    title: 'LAVA ROUPAS ENZIMÁTICO',
+                    desc: 'O BlueSafe Lava Roupas Enzimático é um detergente líquido desenvolvido com tecnologia enzimática de alta performance, proporcionando uma limpeza profunda e eficiente para diferentes tipos de tecidos. Sua fórmula avançada atua diretamente na remoção de sujeiras e manchas, preservando as cores e a qualidade das roupas mesmo após diversas lavagens.'
+                },
+                'shampoo': {
+                    title: 'DETERGENTE DE ALTA PERFORMANCE',
+                    desc: 'Desenvolvido para limpeza externa e automotiva de alta performance. Remove graxa, fuligem e sujeiras pesadas sem agredir a pintura ou o acabamento das superfícies, garantindo brilho e proteção duradoura.'
+                },
+                'outros': {
+                    title: 'OUTRAS SOLUÇÕES DE LIMPEZA',
+                    desc: 'Explore nossa linha completa de produtos para cuidados domésticos, incluindo limpadores multiuso, desinfetantes e aromatizadores ecológicos formulados para garantir o bem-estar e a segurança da sua família.'
+                }
+            };
+
+            const tabBtns = document.querySelectorAll('.brand-tab-btn');
+            const productTitle = document.getElementById('bluesafe-product-title');
+            const productDesc = document.getElementById('bluesafe-product-desc');
+            const flexContainer = document.querySelector('.products-flex');
+
+            tabBtns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    tabBtns.forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+
+                    const tabName = btn.dataset.tab;
+                    const data = productsData[tabName];
+
+                    if (data) {
+                        flexContainer.style.opacity = '0';
+                        flexContainer.style.transform = 'translateY(10px)';
+
+                        setTimeout(() => {
+                            productTitle.innerText = data.title;
+                            productDesc.innerText = data.desc;
+                            flexContainer.style.opacity = '1';
+                            flexContainer.style.transform = 'translateY(0)';
+                        }, 250);
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+
+<html lang="pt-BR">
+
+<head> <meta charset="UTF-8"> <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Vendedores Mais Próximos - Wade Brasil</title>
+
+<link rel="stylesheet" href="resultado.css">
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+
+</head>
+
+<body>
+
+<!-- Menu Superior -->
+<nav class="navbar">
+
+    <img class="img1" src="logo-wade.webp">
+
+    <ul class="nav-links">
+        <li>
+            <a href="http://localhost:3000/index.html" class="active">
+                Voltar
+            </a>
+        </li>
+    </ul>
+
+</nav>
+
+
+<!-- Conteúdo Principal -->
+<main class="main-container">
+
+    <div class="resultado-wrapper">
+
+        <!-- Mapa -->
+        <div class="map-box">
+            <div id="map"></div>
+        </div>
+
+
+        <!-- Card dos Resultados -->
+        <div class="vendedores-card">
+
+            <div>
+
+                <h1 class="card-title">
+                    Vendedores mais próximos
+                </h1>
+
+                <div id="listaVendedores"></div>
+
+            </div>
+
+
+            <a href="http://localhost:3000/index.html" class="btn-submit">
+                Voltar
+            </a>
+
+        </div>
+
+    </div>
+
+</main>
+
+
+<!-- Leaflet -->
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+
+<script>
+
+    async function carregarResultado() {
+
+        const parametros = new URLSearchParams(
+            window.location.search
+        );
+
+        const cep = parametros.get("cep");
+
+
+        if (!cep) {
+            alert("CEP não informado.");
+            return;
+        }
+
+
+        try {
+
+            // Busca a localização do cliente
+            const respostaCliente = await fetch(
+                `http://localhost:3000/localizar/${encodeURIComponent(cep)}`
+            );
+
+            const cliente = await respostaCliente.json();
+
+
+            if (!respostaCliente.ok) {
+
+                alert(
+                    cliente.erro ||
+                    "Erro ao localizar cliente."
+                );
+
+                return;
+            }
+
+
+            // Busca todos os vendedores
+            const respostaVendedores = await fetch(
+                "http://localhost:3000/vendedores"
+            );
+
+            const vendedores = await respostaVendedores.json();
+
+
+            if (!respostaVendedores.ok) {
+
+                alert("Erro ao buscar vendedores.");
+
+                return;
+            }
+
+
+            // Calcula a distância de cada vendedor
+            vendedores.forEach(vendedor => {
+
+                vendedor.distancia = calcularDistancia(
+
+                    parseFloat(cliente.latitude),
+                    parseFloat(cliente.longitude),
+
+                    parseFloat(vendedor.latitude),
+                    parseFloat(vendedor.longitude)
+
+                );
+
+            });
+
+
+            // Ordena do mais próximo para o mais distante
+            vendedores.sort(
+                (a, b) => a.distancia - b.distancia
+            );
+
+
+            // Mostra somente os 2 mais próximos
+            mostrarVendedores(vendedores);
+
+
+            // Mostra TODOS os vendedores no mapa
+            criarMapa(cliente, vendedores);
+
+
+        } catch (erro) {
+
+            console.error("Erro:", erro);
+
+            alert("Erro ao carregar os resultados.");
+
+        }
+
+    }
+
+
+    // Calcula a distância entre dois pontos
+    function calcularDistancia(
+        lat1,
+        lon1,
+        lat2,
+        lon2
+    ) {
+
+        const R = 6371;
+
+        const dLat =
+            (lat2 - lat1) * Math.PI / 180;
+
+        const dLon =
+            (lon2 - lon1) * Math.PI / 180;
+
+
+        const a =
+            Math.sin(dLat / 2) *
+            Math.sin(dLat / 2) +
+
+            Math.cos(lat1 * Math.PI / 180) *
+            Math.cos(lat2 * Math.PI / 180) *
+
+            Math.sin(dLon / 2) *
+            Math.sin(dLon / 2);
+
+
+        const c =
+            2 *
+            Math.atan2(
+                Math.sqrt(a),
+                Math.sqrt(1 - a)
+            );
+
+
+        return R * c;
+
+    }
+
+
+    // Mostra somente os 2 vendedores mais próximos
+    function mostrarVendedores(vendedores) {
+
+        const lista =
+            document.getElementById(
+                "listaVendedores"
+            );
+
+
+        lista.innerHTML = "";
+
+
+        if (vendedores.length === 0) {
+
+            lista.innerHTML =
+                "<p>Nenhum vendedor encontrado.</p>";
+
+            return;
+        }
+
+
+        // Como os vendedores já estão ordenados
+        // pela distância, pegamos os dois primeiros
+        const doisMaisProximos =
+            vendedores.slice(0, 2);
+
+
+        doisMaisProximos.forEach(vendedor => {
+
+            lista.innerHTML += `
+
+                <div class="vendedor-item">
+
+                    <p>
+                        <strong>Nome:</strong>
+                        ${vendedor.nome}
+                    </p>
+
+                    <p>
+                        <strong>Email:</strong>
+                        ${vendedor.email || "Não informado"}
+                    </p>
+
+                    <p>
+                        <strong>Telefone:</strong>
+                        ${vendedor.telefone || "Não informado"}
+                    </p>
+
+                    <p>
+                        <strong>Distância:</strong>
+                        ${vendedor.distancia.toFixed(2)} km
+                    </p>
+
+                </div>
+
+            `;
+
+        });
+
+    }
+
+
+    // Cria o mapa
+    function criarMapa(
+        cliente,
+        vendedores
+    ) {
+
+        const map = L.map("map").setView(
+
+            [
+                parseFloat(cliente.latitude),
+                parseFloat(cliente.longitude)
+            ],
+
+            13
+
+        );
+
+
+        // OpenStreetMap
+        L.tileLayer(
+            "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
+            {
+
+                maxZoom: 19,
+
+                attribution:
+                    "&copy; OpenStreetMap contributors"
+
+            }
+        ).addTo(map);
+
+
+        // Marcador do cliente
+        L.marker([
+
+            parseFloat(cliente.latitude),
+            parseFloat(cliente.longitude)
+
+        ])
+            .addTo(map)
+
+            .bindPopup(
+                "<strong>Você está aqui</strong>"
+            )
+            .openPopup();
+
+
+        // Marcadores de TODOS os vendedores
+        vendedores.forEach(vendedor => {
+
+            L.marker([
+
+                parseFloat(vendedor.latitude),
+                parseFloat(vendedor.longitude)
+
+            ])
+                .addTo(map)
+
+                .bindPopup(`
+
+                    <strong>
+                        ${vendedor.nome}
+                    </strong>
+
+                    <br>
+
+                    Distância:
+                    ${vendedor.distancia.toFixed(2)}
+                    km
+
+                `);
+
+        });
+
+    }
+
+
+    // Inicia a página
+    carregarResultado();
+
+</script>
+
+</body>
+
+</html>

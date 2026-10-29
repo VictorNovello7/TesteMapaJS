@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wade Brasil - Nosso Aplicativo</title>
+    <meta name="description"
+        content="Baixe o aplicativo oficial da WADE Brasil. Gerencie suas comissões, vendas e sua rede de forma escalável e sustentável.">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Stylesheet -->
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <!-- Header / Cabeçalho da App (Fundo Teal, Botão Home Roxo) -->
+    <header class="app-header">
+        <div class="header-container">
+            <a href="index.html" class="logo" id="logo-link">
+                <img src="imgs/logo-wade.webp" alt="Wade Brasil" class="logo-img" width="140" height="45">
+            </a>
+
+            <nav class="nav-menu" id="nav-menu">
+                <ul>
+                    <li><a href="index.html#marcas" class="nav-link">Marcas</a></li>
+                    <li><a href="index.html#produtos" class="nav-link">Produtos</a></li>
+                    <li><a href="index.html#historia" class="nav-link">História</a></li>
+                    <li><a href="index.html#duvidas" class="nav-link">Dúvidas</a></li>
+                </ul>
+            </nav>
+
+            <div class="header-actions">
+                <a href="index.html" class="btn-home" id="btn-home">Home</a>
+                <button class="mobile-toggle" id="mobile-toggle" aria-label="Abrir Menu">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Seção Principal: App Showcase Banner com Aspect Ratio travada e overlays responsivos -->
+    <main class="app-main">
+        <section class="app-banner-section">
+            <div class="app-banner">
+                <!-- Conteúdo invisível para SEO e Acessibilidade (Screen Readers) -->
+                <div class="sr-only">
+                    <h1>nosso aplicativo</h1>
+                    <p>o app Wade é o que torna seu negócio escalável.</p>
+                    <ul>
+                        <li><strong>Acesso por convite</strong> — Organização e rastreabilidade desde o primeiro
+                            contato.</li>
+                        <li><strong>Compras integradas</strong> — Venda direta de forma simples e eficiente.</li>
+                        <li><strong>Comissões automáticas</strong> — Seus ganhos calculados em tempo real.</li>
+                        <li><strong>Gestão de rede</strong> — Acompanhe o crescimento da sua equipe.</li>
+                        <li><strong>Controle financeiro</strong> — Saque com clareza e previsibilidade.</li>
+                    </ul>
+                </div>
+
+                <!-- Overlays de Download (Google Play e App Store) posicionados precisamente por percentual -->
+                <div class="download-overlay-container">
+                    <a href="https://play.google.com/store/apps/details?id=com.wadebrasil.wade_mobile_android&pcampaignid=web_share"
+                        target="_blank" class="download-link-overlay google-play" aria-label="Baixe na Google Play">
+                        <img src="imgs/playstore.png" alt="Google Play">
+                    </a>
+                    <a href="https://apps.apple.com/br/app/wade/id6751115079" target="_blank"
+                        class="download-link-overlay app-store" aria-label="Baixe na App Store">
+                        <img src="imgs/appstore.png" alt="App Store">
+                    </a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Rodapé / Footer do App (Teal) -->
+    <footer class="app-footer">
+        <div class="footer-container">
+            <!-- Lado Esquerdo: Logo -->
+            <div class="footer-brand">
+                <img src="imgs/logo-wade.webp" alt="Wade Brasil" class="footer-logo-img" width="140" height="45">
+            </div>
+
+            <!-- Lado Central: Contatos -->
+            <div class="footer-contacts">
+                <h4 class="footer-title">Contatos:</h4>
+                <ul>
+                    <li><i class="fa-solid fa-phone"></i> (54) 3601-5330</li>
+                    <li><i class="fa-brands fa-instagram"></i> wade.brasil</li>
+                    <li><i class="fa-solid fa-envelope"></i> grupo.wade@gmail.com</li>
+                </ul>
+            </div>
+
+            <!-- Lado Direito: Links de Páginas -->
+            <div class="footer-pages">
+                <h4 class="footer-title">Páginas</h4>
+                <ul>
+                    <li><a href="index.html#marcas">Marcas</a></li>
+                    <li><a href="index.html#produtos">Produtos</a></li>
+                    <li><a href="index.html#historia">História</a></li>
+                    <li><a href="index.html#duvidas">Dúvidas</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 Wade. Todos os direitos reservados.</p>
+        </div>
+    </footer>
+
+    <!-- JavaScript para mobile toggler -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const mobileToggle = document.getElementById('mobile-toggle');
+            const navMenu = document.getElementById('nav-menu');
+            if (mobileToggle && navMenu) {
+                mobileToggle.addEventListener('click', () => {
+                    mobileToggle.classList.toggle('active');
+                    navMenu.classList.toggle('active');
+                });
+            }
+        });
+    </script>
+</body>
+
+</html>
