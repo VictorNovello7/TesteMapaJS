@@ -3,6 +3,8 @@ const cors = require("cors");
 const path = require("path");
 const pool = require("./db");
 
+const BASE_URL = process.env.BASE_URL || "http://localhost:3000";
+
 const app = express();
 
 app.use(cors());
@@ -423,62 +425,62 @@ app.get("/localizar/:cep", async (req, res) => {
 
         for (const busca of buscas) {
 
-    console.log("Tentando localizar cliente:");
-    console.log(busca);
+            console.log("Tentando localizar cliente:");
+            console.log(busca);
 
-    const url =
-        "https://nominatim.openstreetmap.org/search?" +
-        "format=jsonv2" +
-        "&q=" +
-        encodeURIComponent(busca) +
-        "&countrycodes=br" +
-        "&limit=1";
+            const url =
+                "https://nominatim.openstreetmap.org/search?" +
+                "format=jsonv2" +
+                "&q=" +
+                encodeURIComponent(busca) +
+                "&countrycodes=br" +
+                "&limit=1";
 
-    const respostaNominatim = await fetch(url, {
+            const respostaNominatim = await fetch(url, {
 
-        headers: {
-            "User-Agent": "SistemaWade/1.0"
+                headers: {
+                    "User-Agent": "SistemaWade/1.0"
+                }
+
+            });
+
+            const textoNominatim =
+                await respostaNominatim.text();
+
+            console.log("Resposta do Nominatim:");
+            console.log(textoNominatim);
+
+            try {
+
+                localizacoes =
+                    JSON.parse(textoNominatim);
+
+            } catch (erro) {
+
+                console.error(
+                    "O Nominatim não retornou JSON."
+                );
+
+                continue;
+
+            }
+
+            if (localizacoes.length > 0) {
+
+                console.log(
+                    "Localização encontrada!"
+                );
+
+                break;
+
+            }
+
+            // Esperar 1 segundo antes da próxima busca
+            await new Promise(resolve =>
+                setTimeout(resolve, 1000)
+            );
+
         }
-
-    });
-
-    const textoNominatim =
-        await respostaNominatim.text();
-
-    console.log("Resposta do Nominatim:");
-    console.log(textoNominatim);
-
-    try {
-
-        localizacoes =
-            JSON.parse(textoNominatim);
-
-    } catch (erro) {
-
-        console.error(
-            "O Nominatim não retornou JSON."
-        );
-
-        continue;
-
-    }
-
-    if (localizacoes.length > 0) {
-
-        console.log(
-            "Localização encontrada!"
-        );
-
-        break;
-
-    }
-
-    // Esperar 1 segundo antes da próxima busca
-    await new Promise(resolve =>
-        setTimeout(resolve, 1000)
-    );
-
-}
 
 
         // ==================================
@@ -568,7 +570,7 @@ app.get("/vendedores/proximos/:cep", async (req, res) => {
         // ==================================
 
         const respostaCliente = await fetch(
-            `http://localhost:3000/localizar/${cepLimpo}`
+            `${BASE_URL}/localizar/${cepLimpo}`
         );
 
         const cliente = await respostaCliente.json();
@@ -704,10 +706,8 @@ app.get("/vendedores/proximos/:cep", async (req, res) => {
 
 
 
-app.listen(3000, () => {
+const PORT = process.env.PORT || 3000;
 
-    console.log(
-        "Servidor rodando em http://localhost:3000"
-    );
-
+app.listen(PORT, "0.0.0.0", () => {
+    console.log(`Servidor rodando na porta ${PORT}`);
 });
