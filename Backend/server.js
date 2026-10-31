@@ -7,7 +7,7 @@ const pool = require("./db");
 
 const app = express();
 const PORTA = process.env.PORT || 3000;
-const PASTA_FRONTEND = path.join(__dirname, "../frontend");
+const PASTA_FRONTEND = path.join(__dirname, "../Frontend");
 
 app.use(cors());
 app.use(express.json({ limit: "1mb" }));
