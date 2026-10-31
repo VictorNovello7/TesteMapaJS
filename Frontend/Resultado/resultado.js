@@ -17,9 +17,8 @@ async function buscarVendedores() {
     try {
 
         const resposta = await fetch(
-            `http://localhost:3000/vendedores/proximos/${cep}`
+            `https://wade-backend-hsn9.onrender.com/vendedores/proximos/${cep}`
         );
-
         const dados = await resposta.json();
 
         if (!resposta.ok) {
@@ -55,9 +54,9 @@ async function buscarVendedores() {
             dados.cliente.latitude,
             dados.cliente.longitude
         ])
-        .addTo(mapa)
-        .bindPopup("Você está aqui.")
-        .openPopup();
+            .addTo(mapa)
+            .bindPopup("Você está aqui.")
+            .openPopup();
 
         dados.vendedores.forEach(vendedor => {
 
@@ -65,11 +64,11 @@ async function buscarVendedores() {
                 parseFloat(vendedor.latitude),
                 parseFloat(vendedor.longitude)
             ])
-            .addTo(mapa)
-            .bindPopup(
-                `<b>${vendedor.nome}</b><br>` +
-                `Distância: ${vendedor.distancia.toFixed(2)} km`
-            );
+                .addTo(mapa)
+                .bindPopup(
+                    `<b>${vendedor.nome}</b><br>` +
+                    `Distância: ${vendedor.distancia.toFixed(2)} km`
+                );
 
         });
 
