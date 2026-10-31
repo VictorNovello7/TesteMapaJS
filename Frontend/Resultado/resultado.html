@@ -54,7 +54,7 @@
             </div>
 
 
-            <a href="http://localhost:3000/index.html" class="btn-submit">
+            <a href="/index.html" class="btn-submit">
                 Voltar
             </a>
 
@@ -90,8 +90,8 @@
 
             // Busca a localização do cliente
             const respostaCliente = await fetch(
-                `http://localhost:3000/localizar/${encodeURIComponent(cep)}`
-            );
+    `https://wade-backend-hsn9.onrender.com/localizar/${encodeURIComponent(cep)}`
+);
 
             const cliente = await respostaCliente.json();
 
@@ -108,9 +108,9 @@
 
 
             // Busca todos os vendedores
-            const respostaVendedores = await fetch(
-                "http://localhost:3000/vendedores"
-            );
+          const respostaVendedores = await fetch(
+    "https://wade-backend-hsn9.onrender.com/vendedores"
+);  
 
             const vendedores = await respostaVendedores.json();
 
