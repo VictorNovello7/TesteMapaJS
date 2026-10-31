@@ -1,6 +1,6 @@
-
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -13,6 +13,7 @@
         }
     </style>
 </head>
+
 <body>
 
     <!-- Menu Superior -->
@@ -31,7 +32,7 @@
 
         <div class="card-box consulta-card">
             <h1 class="card-title">Consultar vendedores</h1>
-            
+
             <form id="consultaForm">
                 <div class="form-group">
                     <label for="cepConsulta">CEP</label>
@@ -44,43 +45,45 @@
     </main>
 
     <script>
-    document.getElementById('cepConsulta').addEventListener('input', function(e) {
-        let v = e.target.value.replace(/\D/g, '');
-        v = v.replace(/^(\d{5})(\d)/, '$1-$2');
-        e.target.value = v;
-    });
+        document.getElementById('cepConsulta').addEventListener('input', function (e) {
+            let v = e.target.value.replace(/\D/g, '');
+            v = v.replace(/^(\d{5})(\d)/, '$1-$2');
+            e.target.value = v;
+        });
 
-    document.getElementById('consultaForm').addEventListener('submit', async function(e) {
-    e.preventDefault();
+        document.getElementById('consultaForm').addEventListener('submit', async function (e) {
+            e.preventDefault();
 
-    const cep = document.getElementById('cepConsulta').value;
+            const cep = document.getElementById('cepConsulta').value;
+            const cepLimpo = cep.replace(/\D/g, '');
 
-    if (!cep) {
-        alert('Digite um CEP.');
-        return;
-    }
+            if (cepLimpo.length !== 8) {
+                alert('Digite um CEP válido.');
+                return;
+            }
 
-    try {
-        const resposta = await fetch(
-            `http://localhost:3000/localizar/${cep}`
-        );
+            try {
+                const resposta = await fetch(
+                    `https://wade-backend-hsn9.onrender.com/vendedores/proximos/${cepLimpo}`
+                );
 
-        const dados = await resposta.json();
+                const dados = await resposta.json();
 
-        if (!resposta.ok) {
-            alert(dados.erro);
-            return;
-        }
+                if (!resposta.ok) {
+                    alert(dados.erro);
+                    return;
+                }
 
-        // Vai para a página de resultado
-        window.location.href =
-            `http://localhost:3000/resultado/resultado.html?cep=${encodeURIComponent(cep)}`;
+                // Vai para a página de resultado
+                window.location.href =
+                    `/resultado/resultado.html?cep=${encodeURIComponent(cepLimpo)}`;
 
-    } catch (erro) {
-        console.error(erro);
-        alert('Erro ao conectar com o servidor.');
-    }
-});
-</script>
+            } catch (erro) {
+                console.error(erro);
+                alert('Erro ao conectar com o servidor.');
+            }
+        });
+    </script>
 </body>
+
 </html>

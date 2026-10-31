@@ -371,6 +371,7 @@ app.get("/localizar/:cep", async (req, res) => {
         try {
 
             endereco = JSON.parse(textoViaCep);
+            console.log("Resposta recebida do ViaCEP:", textoViaCep);
 
         } catch (erro) {
 
