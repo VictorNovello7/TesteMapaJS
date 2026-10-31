@@ -348,4 +348,44 @@ if (require.main === module) {
     });
 }
 
+// Diagnóstico temporário do cache de CEPs
+app.get("/diagnostico-cache", async (req, res) => {
+    try {
+        await prepararCache();
+
+        const cache = await pool.query(`
+            SELECT COUNT(*) AS total
+            FROM cep_localizacoes
+        `);
+
+        const consultores = await pool.query(`
+            SELECT
+                COUNT(*) AS total,
+                COUNT(*) FILTER (
+                    WHERE latitude IS NOT NULL
+                    AND longitude IS NOT NULL
+                ) AS com_coordenadas
+            FROM vendedores
+        `);
+
+        res.json({
+            cache: {
+                total_ceps: Number(cache.rows[0].total)
+            },
+            consultores: {
+                total: Number(consultores.rows[0].total),
+                com_coordenadas: Number(
+                    consultores.rows[0].com_coordenadas
+                )
+            }
+        });
+
+    } catch (erro) {
+        console.error("Erro no diagnóstico do cache:", erro);
+        res.status(500).json({
+            erro: "Não foi possível consultar o cache."
+        });
+    }
+});
+
 module.exports = app;
