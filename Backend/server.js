@@ -159,18 +159,22 @@ app.post("/vendedores", async (req, res) => {
 
             const respostaNominatim = await fetch(url, {
 
-                headers: {
-                    "User-Agent": "SistemaWade/1.0"
-                }
+    headers: {
+        "User-Agent": "WadeBrasil/1.0 (projeto acadêmico)"
+    }
 
-            });
+});
 
-            const textoNominatim =
-                await respostaNominatim.text();
+console.log(
+    "Status do Nominatim:",
+    respostaNominatim.status
+);
 
-            console.log("Resposta do Nominatim:");
-            console.log(textoNominatim);
+const textoNominatim =
+    await respostaNominatim.text();
 
+console.log("Resposta do Nominatim:");
+console.log(textoNominatim);
 
             try {
 
