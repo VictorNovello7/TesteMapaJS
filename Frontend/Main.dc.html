@@ -1,0 +1,528 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Wade — Home</title>
+<script src="./vendor/react.js"></script>
+<script src="./vendor/react-dom.js"></script>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
+<style>
+.top{background:radial-gradient(900px 500px at 85% 20%,rgba(88,200,192,.28),transparent 60%),linear-gradient(160deg,#6B50A4 0%,#523C8E 55%,#3F2E73 100%)}
+body{margin:0;font-family:'Plus Jakarta Sans',system-ui,sans-serif;color:#0B0B0F;background:#fff}
+a{color:#0B0B0F;text-decoration:none}a:hover{color:#6B50A4}
+.snap{scroll-snap-type:x mandatory;scrollbar-width:thin}
+.snap > *{scroll-snap-align:start}
+.faqbg{background:linear-gradient(rgba(247,244,251,.2),rgba(247,244,251,.2)),url(./assets/4e15b4c64f301b3a6fe4eb34a0f42b69.jpg) center/cover no-repeat}
+@keyframes orbitSpin{to{transform:rotate(360deg)}}
+@keyframes orbitKeep{to{transform:rotate(-360deg)}}
+.orbit{animation:orbitSpin 60s linear infinite}
+.keep{animation:orbitKeep 60s linear infinite}
+@media (prefers-reduced-motion: reduce){.orbit,.keep{animation:none}}
+.navlink{color:#fff;font-weight:500;font-size:15px}.navlink:hover{color:#BFE3E1}
+</style>
+</helmet>
+<div style="width:100%;background:#FFFFFF;color:#0B0B0F;font-family:'Plus Jakarta Sans',system-ui,sans-serif">
+
+<!-- TOPO: nav + hero -->
+<div id="topo" class="top" style="color:#fff">
+<header style="display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:16px;padding:20px 48px;max-width:1344px;margin:0 auto;box-sizing:border-box">
+<a href="#topo" aria-label="Wade Brasil — início" style="display:flex"><img src="./assets/6cd9b8435c7ddcbd6725c7cb0a6e3b4b.webp" alt="Wade Brasil" style="height:52px;width:auto;display:block"></a>
+<nav style="display:flex;flex-wrap:wrap;gap:28px">
+<a class="navlink" href="#marcas">Marcas</a><a class="navlink" href="#produtos">Produtos</a><a class="navlink" href="#historia">História</a><a class="navlink" href="#consultores">Consultores</a><a class="navlink" href="#app">Aplicativo</a><a class="navlink" href="#faq">Dúvidas</a>
+</nav>
+<a href="#app" style="display:inline-flex;align-items:center;min-height:44px;padding:0 24px;border-radius:999px;background:#fff;color:#4F3A8A;font-weight:700;font-size:15px">Baixar app</a>
+</header>
+
+<section style="max-width:1344px;margin:0 auto;padding:40px 48px 96px;box-sizing:border-box;display:flex;flex-wrap:wrap;align-items:center;gap:56px">
+<div style="flex:1 1 480px;min-width:0;display:flex;flex-direction:column;gap:28px">
+<div style="display:inline-flex;align-self:flex-start;align-items:center;gap:10px;padding:8px 16px;border-radius:999px;background:rgba(255,255,255,.14);font-size:14px;font-weight:600;color:#fff">
+<span style="width:8px;height:8px;border-radius:50%;background:#58C8C0"></span>Construindo o futuro com propósito
+</div>
+<h1 style="margin:0;font-size:64px;line-height:1.03;letter-spacing:-2.5px;font-weight:800;color:#fff">Natureza, limpeza e oportunidade em um só ecossistema.</h1>
+<p style="margin:0;font-size:20px;line-height:1.55;color:#EDE8F7;max-width:560px">A Wade reúne biocosméticos, nutrição e soluções de limpeza em um grupo que une tecnologia, sustentabilidade e oportunidades reais de crescimento para pessoas.</p>
+<div style="display:flex;flex-wrap:wrap;gap:14px">
+<a href="#produtos" style="display:inline-flex;align-items:center;min-height:52px;padding:0 30px;border-radius:999px;background:#fff;color:#4F3A8A;font-weight:700;font-size:16px">Conhecer os produtos</a>
+<a href="#consultores" style="display:inline-flex;align-items:center;min-height:52px;padding:0 30px;border-radius:999px;border:2px solid #fff;color:#fff;font-weight:700;font-size:16px">Encontrar um consultor</a>
+</div>
+<div style="display:flex;flex-wrap:wrap;gap:36px;padding-top:12px;font-size:14px;color:#EDE8F7">
+<div><strong style="display:block;font-size:22px;color:#fff">Desde 2019</strong>Primeiros produtos no mercado</div>
+<div><strong style="display:block;font-size:22px;color:#fff">3 marcas</strong>Wade, BeFarm e BlueSafe</div>
+<div><strong style="display:block;font-size:22px;color:#fff">Parceria Biopark</strong>Inovação e pesquisa</div>
+</div>
+</div>
+
+<!-- ecossistema: Wade no centro, marcas em órbita -->
+<div style="flex:1 1 420px;min-width:0;display:flex;justify-content:center">
+<div style="position:relative;width:min(540px,100%);aspect-ratio:1/1">
+<div style="position:absolute;inset:0;border-radius:50%;border:1.5px dashed rgba(255,255,255,.45)"></div>
+<div style="position:absolute;inset:14%;border-radius:50%;border:1.5px dashed rgba(88,200,192,.7)"></div>
+<div style="position:absolute;inset:28%;border-radius:50%;background:#3F2E73;border:3px solid rgba(255,255,255,.35);box-shadow:0 16px 40px rgba(0,0,0,.25);display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;box-sizing:border-box;padding:10px;gap:6px">
+<img src="./assets/6cd9b8435c7ddcbd6725c7cb0a6e3b4b.webp" alt="Wade Brasil" style="width:76%;height:auto;display:block">
+<span style="font-size:13px;font-weight:600;color:#EDE8F7">Biocosméticos</span>
+</div>
+<div class="orbit" style="position:absolute;inset:0;pointer-events:none">
+<a class="keep" href="#marcas" style="pointer-events:auto;position:absolute;left:62%;top:2%;width:34%;aspect-ratio:1/1;border-radius:50%;background:#fff;box-shadow:0 12px 30px rgba(0,0,0,.2);display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;box-sizing:border-box;padding:8px">
+<span style="font-size:22px;font-weight:800;letter-spacing:-.5px"><span style="color:#E8A6C4">BE</span><span style="color:#595959">FARM</span></span>
+<span style="font-size:12px;color:#3A3A44;font-weight:600">Nutrição e bem-estar</span>
+</a>
+<a class="keep" href="#marcas" style="pointer-events:auto;position:absolute;left:2%;top:64%;width:34%;aspect-ratio:1/1;border-radius:50%;background:#fff;border:3px solid #58C8C0;box-shadow:0 12px 30px rgba(0,0,0,.2);display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;box-sizing:border-box;padding:8px">
+<span style="font-size:22px;font-weight:800;letter-spacing:-.5px;color:#0B0B0F">BlueSafe</span>
+<span style="font-size:12px;color:#3A3A44;font-weight:600">Limpeza inteligente</span>
+</a>
+<div style="position:absolute;left:84%;top:66%;width:14px;height:14px;border-radius:50%;background:#58C8C0"></div>
+<div style="position:absolute;left:10%;top:22%;width:10px;height:10px;border-radius:50%;background:#fff"></div>
+</div>
+</div>
+</div>
+</section>
+</div>
+
+<!-- NOSSO GRUPO -->
+<section id="marcas" style="background:#F7F4FB;padding:96px 0">
+<div style="max-width:1344px;margin:0 auto;padding:0 48px;box-sizing:border-box;display:flex;flex-direction:column;gap:48px">
+<div style="max-width:760px;display:flex;flex-direction:column;gap:16px">
+<span style="font-size:14px;font-weight:700;letter-spacing:1.5px;color:#6B50A4">MARCAS</span>
+<h2 style="margin:0;font-size:46px;line-height:1.08;letter-spacing:-1.5px;font-weight:800">Conheça as marcas do grupo.</h2>
+<p style="margin:0;font-size:18px;line-height:1.6;color:#3A3A44">Cada marca cuida de um momento da sua rotina. Escolha uma delas para ver os produtos.</p>
+</div>
+<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:24px">
+
+<!-- Wade -->
+<article style="background:#fff;border-radius:28px;overflow:hidden;display:flex;flex-direction:column;box-shadow:0 10px 30px rgba(107,80,164,.08)">
+<div style="height:120px;background:#6B50A4;display:flex;align-items:center;justify-content:center"><img src="./assets/6cd9b8435c7ddcbd6725c7cb0a6e3b4b.webp" alt="Wade Brasil" style="height:60px;width:auto"></div>
+<div style="padding:28px 28px 32px;display:flex;flex-direction:column;gap:14px;flex:1">
+<strong style="font-size:22px;letter-spacing:-.5px">Biocosméticos</strong>
+<p style="margin:0;font-size:16px;line-height:1.6;color:#3A3A44;min-height:104px">A marca-mãe do grupo. A Wade do Brasil cuida do cabelo com a linha Rescue, unindo inovação, tecnologia e ativos naturais.</p>
+<div style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px">
+<div style="aspect-ratio:3/4;border-radius:16px;background:#F3F0F9;overflow:hidden"><img src="./assets/abfddf0539989801123f0522fc573562.png" alt="Máscara Rescue Wade" style="width:100%;height:100%;object-fit:contain;padding:8px;box-sizing:border-box"></div>
+<div style="aspect-ratio:3/4;border-radius:16px;background:#F3F0F9;overflow:hidden"><img src="./assets/cc7c635395e4b5cad962ebcfab810264.png" alt="Shampoo Rescue Wade" style="width:100%;height:100%;object-fit:contain;padding:8px;box-sizing:border-box"></div>
+<div style="aspect-ratio:3/4;border-radius:16px;background:#F3F0F9;overflow:hidden"><img src="./assets/e3d804883a81faebc49ec94ba242e38e.png" alt="Condicionador Rescue Wade" style="width:100%;height:100%;object-fit:contain;padding:8px;box-sizing:border-box"></div>
+</div>
+<a href="#produtos" onClick="{{goWade}}" style="display:inline-flex;align-items:center;justify-content:center;min-height:48px;border-radius:999px;background:#6B50A4;color:#fff;font-weight:700;margin-top:auto">Ver produtos Wade</a>
+</div>
+</article>
+
+<!-- BeFarm -->
+<article style="background:#fff;border-radius:28px;overflow:hidden;display:flex;flex-direction:column;box-shadow:0 10px 30px rgba(94,127,58,.1)">
+<div style="height:120px;background:#5E7F3A;display:flex;align-items:center;justify-content:center"><span style="font-size:40px;font-weight:800;letter-spacing:-1px"><span style="color:#F7CFE0">BE</span><span style="color:#FFFFFF">FARM</span></span></div>
+<div style="padding:28px 28px 32px;display:flex;flex-direction:column;gap:14px;flex:1">
+<strong style="font-size:22px;letter-spacing:-.5px">Nutrição, saúde e bem-estar</strong>
+<p style="margin:0;font-size:16px;line-height:1.6;color:#3A3A44;min-height:104px">Biscoitos naturais, nutracêuticos, café, sucos e água mineral para um público moderno e consciente.</p>
+<div style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px">
+<div style="aspect-ratio:3/4;border-radius:16px;background:#F1E7DA;overflow:hidden"><img src="./assets/02c73ce1f76cfb45b88bf59c2b4382da.jpg" alt="Café BeFarm Origens" style="width:100%;height:100%;object-fit:cover"></div>
+<div style="aspect-ratio:3/4;border-radius:16px;background:#F6E6EE;overflow:hidden"><img src="./assets/3dcdcd873cc97c4f3804fe6ad4fc07a2.jpg" alt="Mini Crackers BeFarm" style="width:100%;height:100%;object-fit:cover"></div>
+<div style="aspect-ratio:3/4;border-radius:16px;background:#F1F3EA;overflow:hidden"><img src="./assets/dc7136385ebcb01bdb96b67bc0e897ba.jpg" alt="Biscoito Integral BeFarm" style="width:100%;height:100%;object-fit:cover;object-position:65% 50%"></div>
+</div>
+<a href="#produtos" onClick="{{goBefarm}}" style="display:inline-flex;align-items:center;justify-content:center;min-height:48px;border-radius:999px;background:#5E7F3A;color:#fff;font-weight:700;margin-top:auto">Ver produtos BeFarm</a>
+</div>
+</article>
+
+<!-- BlueSafe -->
+<article style="background:#fff;border-radius:28px;overflow:hidden;display:flex;flex-direction:column;box-shadow:0 10px 30px rgba(88,200,192,.15)">
+<div style="height:120px;background:#2674B5;display:flex;align-items:center;justify-content:center"><span style="font-size:40px;font-weight:800;letter-spacing:-1px;color:#0B0B0F">BlueSafe</span></div>
+<div style="padding:28px 28px 32px;display:flex;flex-direction:column;gap:14px;flex:1">
+<strong style="font-size:22px;letter-spacing:-.5px">Limpeza e cuidado com roupas</strong>
+<p style="margin:0;font-size:16px;line-height:1.6;color:#3A3A44;min-height:104px">Sabões líquidos enzimático e com álcool: alta performance em limpeza, sustentabilidade e experiência de uso.</p>
+<div style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px">
+<div style="aspect-ratio:3/4;border-radius:16px;background:#F3F0F9;overflow:hidden"><img src="./assets/9b0e1706f51404fef995dd09abcd4434.png" alt="Lava Roupas Enzimático BlueSafe" style="width:100%;height:100%;object-fit:contain;padding:8px;box-sizing:border-box"></div>
+<div style="aspect-ratio:3/4;border-radius:16px;background:#EEF7F6;overflow:hidden"><img src="./assets/1be0ec72c8485e8e64391d0598ca0900.png" alt="Lava Roupas com Álcool BlueSafe" style="width:100%;height:100%;object-fit:contain;padding:8px;box-sizing:border-box"></div>
+<div style="aspect-ratio:3/4;border-radius:16px;background:#EDEFF6;overflow:hidden"><img src="./assets/f3d793c0063ecac923288a0da1c29600.jpg" alt="Roupas dobradas e limpas" style="width:100%;height:100%;object-fit:cover;object-position:45% 50%"></div>
+</div>
+<a href="#produtos" onClick="{{goBlue}}" style="display:inline-flex;align-items:center;justify-content:center;min-height:48px;border-radius:999px;background:#2674B5;color:#fff;font-weight:700;margin-top:auto">Ver produtos BlueSafe</a>
+</div>
+</article>
+
+</div>
+</div>
+</section>
+
+<!-- PRODUTOS: filtro + carrossel -->
+<section id="produtos" style="padding:96px 0">
+<div style="max-width:1344px;margin:0 auto;padding:0 48px;box-sizing:border-box;display:flex;flex-direction:column;gap:32px">
+<div style="display:flex;flex-wrap:wrap;gap:24px;align-items:flex-end;justify-content:space-between">
+<div style="max-width:680px;display:flex;flex-direction:column;gap:16px">
+<span style="font-size:14px;font-weight:700;letter-spacing:1.5px;color:#6B50A4">NOSSO GRUPO</span>
+<h2 style="margin:0;font-size:46px;line-height:1.08;letter-spacing:-1.5px;font-weight:800">Três marcas, um padrão de qualidade.</h2>
+<div style="display:flex;gap:6px" aria-hidden="true"><span style="width:56px;height:6px;border-radius:3px;background:#6B50A4"></span><span style="width:56px;height:6px;border-radius:3px;background:#A2C279"></span><span style="width:56px;height:6px;border-radius:3px;background:#7ABFBC"></span></div>
+<p style="margin:0;font-size:18px;line-height:1.6;color:#3A3A44">Wade, BeFarm e BlueSafe compartilham os mesmos valores e padrões de excelência. Filtre por marca para ver cada linha.</p>
+</div>
+<div style="display:flex;gap:12px">
+<button aria-label="Produtos anteriores" onClick="{{prev}}" style="width:52px;height:52px;border-radius:50%;border:2px solid #0B0B0F;background:#fff;color:#0B0B0F;font-size:22px;cursor:pointer;opacity:{{prevOp}}">←</button>
+<button aria-label="Próximos produtos" onClick="{{next}}" style="width:52px;height:52px;border-radius:50%;border:2px solid {{accent}};background:{{accent}};color:{{accentOn}};font-size:22px;cursor:pointer;opacity:{{nextOp}}">→</button>
+</div>
+</div>
+<div style="display:flex;flex-wrap:wrap;gap:10px">
+<sc-for list="{{tabs}}" as="t" hint-placeholder-count="4">
+<button onClick="{{t.pick}}" style="min-height:44px;padding:0 22px;border-radius:999px;border:1.5px solid {{t.border}};background:{{t.bg}};color:{{t.color}};font-weight:700;font-size:14px;font-family:inherit;cursor:pointer">{{t.label}}</button>
+</sc-for>
+</div>
+<div style="overflow:hidden;border-radius:8px">
+<div style="display:flex;gap:24px;transition:transform .45s ease;transform:translateX({{trackX}}px)">
+<sc-for list="{{products}}" as="p" hint-placeholder-count="6">
+<article style="flex:0 0 340px;background:#fff;border:2px solid {{p.main}};border-radius:28px;overflow:hidden;display:flex;flex-direction:column">
+<div style="height:10px;background:{{p.main}}"></div>
+<div style="height:330px;background:{{p.bg}}"><img src="{{p.img}}" alt="{{p.alt}}" style="width:100%;height:100%;object-fit:{{p.fit}};padding:{{p.pad}};box-sizing:border-box;display:block"></div>
+<div style="padding:24px 26px 28px;display:flex;flex-direction:column;gap:8px">
+<span style="align-self:flex-start;padding:4px 12px;border-radius:999px;background:{{p.main}};color:{{p.onMain}};font-size:12px;font-weight:800;letter-spacing:1px">{{p.brand}}</span>
+<strong style="font-size:21px;letter-spacing:-.5px">{{p.name}}</strong>
+<span style="font-size:15px;line-height:1.5;color:#3A3A44">{{p.desc}}</span>
+<a href="#app" style="margin-top:8px;font-size:14px;font-weight:700;color:{{p.text}}">Comprar pelo app →</a>
+</div>
+</article>
+</sc-for>
+</div>
+</div>
+</div>
+</section>
+
+<!-- PROPÓSITO -->
+<section id="proposito" style="background:#F7F4FB;padding:96px 0 72px">
+<div style="max-width:1344px;margin:0 auto;padding:0 48px;box-sizing:border-box;display:flex;flex-direction:column;gap:20px">
+<span style="font-size:14px;font-weight:700;letter-spacing:1.5px;color:#6B50A4">NOSSO PROPÓSITO</span>
+<h2 style="margin:0;font-size:46px;line-height:1.08;letter-spacing:-1.5px;font-weight:800;max-width:820px">Gerar valor sem abrir mão das pessoas e do planeta.</h2>
+<p style="margin:0;font-size:18px;line-height:1.6;color:#3A3A44;max-width:760px">Nossa missão é elevar o conceito de qualidade em produtos naturais, fortalecer relações de confiança e criar oportunidades para que mais pessoas construam uma vida com liberdade, prosperidade e propósito.</p>
+</div>
+<div class="snap" style="display:flex;gap:24px;overflow-x:auto;padding:40px 48px 24px;max-width:1344px;margin:0 auto;box-sizing:border-box">
+<sc-for list="{{beliefs}}" as="b" hint-placeholder-count="4">
+<article style="flex:0 0 400px;min-height:300px;border-radius:28px;padding:36px;display:flex;flex-direction:column;justify-content:flex-start;align-items:flex-start;gap:20px;box-sizing:border-box;background:{{b.bg}};color:{{b.color}}">
+<span style="font-size:15px;font-weight:700;letter-spacing:1.5px;opacity:.8">{{b.n}}</span>
+<span style="font-size:15px;font-weight:700;opacity:.85;margin-top:4px">Acreditamos que</span>
+<strong style="font-size:26px;line-height:1.2;letter-spacing:-.8px;margin-top:-8px">{{b.text}}</strong>
+</article>
+</sc-for>
+</div>
+</section>
+
+<!-- HISTÓRIA: vídeo + linha do tempo interativa -->
+<section id="historia" style="padding:96px 0">
+<div style="max-width:1344px;margin:0 auto;padding:0 48px;box-sizing:border-box;display:flex;flex-direction:column;gap:40px">
+<div style="max-width:760px;display:flex;flex-direction:column;gap:16px">
+<span style="font-size:14px;font-weight:700;letter-spacing:1.5px;color:#25706C">NOSSA HISTÓRIA</span>
+<h2 style="margin:0;font-size:46px;line-height:1.08;letter-spacing:-1.5px;font-weight:800">Toda grande transformação começa com uma pergunta.</h2>
+<p style="margin:0;font-size:18px;line-height:1.6;color:#3A3A44">E se fosse possível criar uma empresa diferente, construída desde o primeiro dia para o futuro?</p>
+</div>
+<div style="position:relative;border-radius:32px;overflow:hidden;height:400px;background:#0B0B0F">
+<img src="./assets/4f4589ba275f8abba7824b2c9f4ff19d.jpg" alt="Produtos BeFarm sobre uma mesa ao ar livre" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.7">
+<div style="position:absolute;inset:0;background:linear-gradient(90deg,rgba(11,11,15,.8),rgba(11,11,15,.1))"></div>
+<div style="position:absolute;left:48px;bottom:44px;right:48px;display:flex;flex-wrap:wrap;align-items:center;gap:24px;color:#fff">
+<div style="width:72px;height:72px;border-radius:50%;background:#fff;display:flex;align-items:center;justify-content:center;flex:none"><div style="margin-left:6px;border-left:20px solid #6B50A4;border-top:12px solid transparent;border-bottom:12px solid transparent"></div></div>
+<div style="display:flex;flex-direction:column;gap:6px"><strong style="font-size:26px;letter-spacing:-.5px">A história da Wade</strong><span style="font-size:15px;opacity:.85">[Vídeo institucional a ser inserido]</span></div>
+</div>
+</div>
+<div style="display:flex;flex-wrap:wrap;gap:10px">
+<sc-for list="{{timeNodes}}" as="n" hint-placeholder-count="5">
+<button onClick="{{n.pick}}" style="min-height:48px;padding:0 22px;border-radius:999px;border:1.5px solid {{n.border}};background:{{n.bg}};color:{{n.color}};font-weight:700;font-size:15px;font-family:inherit;cursor:pointer">{{n.label}}</button>
+</sc-for>
+</div>
+<div style="border-radius:28px;background:#F7F4FB;padding:40px 44px;display:flex;flex-direction:column;gap:14px;max-width:900px">
+<span style="font-size:56px;font-weight:800;letter-spacing:-2px;color:#6B50A4;line-height:1">{{tl.year}}</span>
+<strong style="font-size:24px;letter-spacing:-.5px">{{tl.title}}</strong>
+<p style="margin:0;font-size:17px;line-height:1.65;color:#3A3A44">{{tl.text}}</p>
+</div>
+</div>
+</section>
+
+<!-- APLICATIVO -->
+<section id="app" class="top" style="color:#fff;padding:96px 0">
+<div style="max-width:1344px;margin:0 auto;padding:0 48px;box-sizing:border-box;display:flex;flex-wrap:wrap;align-items:center;gap:64px">
+<div style="flex:1 1 460px;min-width:0;display:flex;flex-direction:column;gap:28px">
+<span style="font-size:14px;font-weight:700;letter-spacing:1.5px;color:#BFE3E1">NOSSO APLICATIVO</span>
+<h2 style="margin:0;font-size:46px;line-height:1.08;letter-spacing:-1.5px;font-weight:800">O app Wade é o que torna seu negócio escalável.</h2>
+<p style="margin:0;font-size:18px;line-height:1.6;opacity:.92">Um aplicativo próprio da Wade, pensado para dar transparência e autonomia, do primeiro contato ao saque. Veja o que você encontra dentro dele:</p>
+<div style="display:flex;flex-direction:column;gap:10px">
+<sc-for list="{{features}}" as="f" hint-placeholder-count="5">
+<div style="display:flex;gap:16px;align-items:flex-start;padding:16px 20px;border-radius:20px;background:rgba(255,255,255,.12)">
+<span style="flex:none;width:34px;height:34px;border-radius:50%;background:#58C8C0;color:#0B0B0F;display:flex;align-items:center;justify-content:center;font-weight:800">{{f.n}}</span>
+<span style="display:flex;flex-direction:column;gap:2px"><strong style="font-size:17px">{{f.title}}</strong><span style="font-size:15px;line-height:1.5;opacity:.92">{{f.text}}</span></span>
+</div>
+</sc-for>
+</div>
+<div style="display:flex;flex-wrap:wrap;gap:14px;align-items:center">
+<a href="https://apps.apple.com/br/app/wade/id6751115079" target="_blank" aria-label="Baixar na App Store" style="display:block"><img src="./assets/89b163f9fe9f8e5003bc8d23e4dfcdbc.png" alt="Baixar na App Store" style="height:52px;width:auto;display:block"></a>
+<a href="https://play.google.com/store/apps/details?id=com.wadebrasil.wade_mobile_android" target="_blank" aria-label="Disponível no Google Play" style="display:block"><img src="./assets/194dc7f1e8ce89a5c9d43ae6059f10b6.png" alt="Disponível no Google Play" style="height:52px;width:auto;display:block"></a>
+</div>
+<span style="font-size:14px;opacity:.85">O acesso é por convite. Procure um consultor Wade para receber o seu.</span>
+</div>
+<div style="flex:1 1 360px;min-width:0;display:flex;justify-content:center;align-items:center">
+<div style="width:min(440px,100%);margin:0 auto;aspect-ratio:820/900;border-radius:40px;overflow:hidden;box-shadow:0 30px 60px rgba(0,0,0,.3);background:#fff">
+<img src="./assets/6f81a8a90601aa2d49489e538343fc63.jpg" alt="Mão segurando um celular com a tela inicial do aplicativo Wade, com as lojas BeFarm e BlueSafe" style="width:100%;height:100%;object-fit:cover;display:block">
+</div>
+</div>
+</div>
+</section>
+
+<!-- CONSULTORES -->
+<section id="consultores" style="padding:96px 0">
+<div style="max-width:1344px;margin:0 auto;padding:0 48px;box-sizing:border-box;display:flex;flex-wrap:wrap;gap:56px;align-items:stretch">
+<div style="flex:1 1 440px;min-width:0;display:flex;flex-direction:column;gap:24px">
+<span style="font-size:14px;font-weight:700;letter-spacing:1.5px;color:#25706C">CONSULTORES WADE</span>
+<h2 style="margin:0;font-size:46px;line-height:1.08;letter-spacing:-1.5px;font-weight:800">Encontre o consultor Wade mais perto de você.</h2>
+<p style="margin:0;font-size:18px;line-height:1.6;color:#3A3A44">Informe seu CEP ou e-mail e conecte-se com quem pode atender você de perto, apresentar os produtos e tirar suas dúvidas.</p>
+<div style="display:flex;gap:10px">
+<button onClick="{{modeCep}}" style="min-height:44px;padding:0 20px;border-radius:999px;border:1.5px solid {{cepBorder}};background:{{cepBg}};color:{{cepColor}};font-weight:600;font-family:inherit;cursor:pointer">Buscar por CEP</button>
+<button onClick="{{modeMail}}" style="min-height:44px;padding:0 20px;border-radius:999px;border:1.5px solid {{mailBorder}};background:{{mailBg}};color:{{mailColor}};font-weight:600;font-family:inherit;cursor:pointer">Buscar por e-mail</button>
+</div>
+<div style="display:flex;flex-wrap:wrap;gap:12px">
+<label style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)" for="busca">Seu CEP ou e-mail</label>
+<input id="busca" value="{{query}}" onInput="{{typeQuery}}" placeholder="{{placeholder}}" style="flex:1 1 240px;min-height:56px;border-radius:999px;border:2px solid #CDBBE6;padding:0 24px;font-size:16px;font-family:inherit;outline:none;box-sizing:border-box">
+<button onClick="{{search}}" style="min-height:56px;padding:0 32px;border-radius:999px;border:none;background:#6B50A4;color:#fff;font-weight:700;font-size:16px;font-family:inherit;cursor:pointer">Buscar consultor</button>
+</div>
+<div style="display:flex;flex-direction:column;gap:12px">
+<sc-if value="{{searched}}" hint-placeholder-val="{{ false }}">
+<sc-for list="{{results}}" as="r" hint-placeholder-count="3">
+<div style="display:flex;align-items:center;gap:16px;padding:18px 22px;border-radius:20px;border:1.5px solid #E6E1EE">
+<div style="flex:none;width:52px;height:52px;border-radius:50%;background:#EEF7F6;color:#25706C;display:flex;align-items:center;justify-content:center;font-weight:800">{{r.initial}}</div>
+<div style="flex:1;display:flex;flex-direction:column;gap:2px"><strong style="font-size:16px">{{r.name}}</strong><sc-if value="{{r.hasDist}}"><span style="font-size:14px;color:#595959">{{r.dist}}</span></sc-if><sc-if value="{{r.hasPhone}}"><a href="{{r.phoneHref}}" style="align-self:flex-start;font-size:14px;color:#595959">{{r.phone}}</a></sc-if><sc-if value="{{r.hasEmail}}"><a href="{{r.emailHref}}" style="align-self:flex-start;font-size:14px;color:#595959;overflow-wrap:anywhere">{{r.email}}</a></sc-if></div>
+<a href="#contato" style="display:inline-flex;align-items:center;min-height:44px;padding:0 18px;border-radius:999px;background:#6B50A4;color:#fff;font-size:14px;font-weight:600">Contatar</a>
+</div>
+</sc-for>
+</sc-if>
+<sc-if value="{{notSearched}}" hint-placeholder-val="{{ true }}">
+<div style="font-size:14px;color:#595959;line-height:1.5">{{hint}}</div>
+</sc-if>
+</div>
+</div>
+<div style="flex:1 1 440px;min-width:0;min-height:480px;border-radius:32px;background:#EEF7F6;position:relative;overflow:hidden">
+<div style="position:absolute;inset:0;background-image:linear-gradient(#D6EBE9 1px,transparent 1px),linear-gradient(90deg,#D6EBE9 1px,transparent 1px);background-size:48px 48px"></div>
+<div style="position:absolute;left:18%;top:26%;width:22px;height:22px;border-radius:50%;background:#6B50A4;border:4px solid #fff"></div>
+<div style="position:absolute;left:62%;top:40%;width:22px;height:22px;border-radius:50%;background:#6B50A4;border:4px solid #fff"></div>
+<div style="position:absolute;left:40%;top:66%;width:22px;height:22px;border-radius:50%;background:#6B50A4;border:4px solid #fff"></div>
+<div style="position:absolute;left:50%;top:50%;width:150px;height:150px;margin:-75px 0 0 -75px;border-radius:50%;background:rgba(107,80,164,.12);border:2px dashed #6B50A4"></div>
+<div style="position:absolute;left:24px;bottom:24px;padding:10px 18px;border-radius:999px;background:#fff;font-size:13px;font-weight:600">[Mapa interativo a integrar]</div>
+</div>
+</div>
+</section>
+
+<!-- JUNTE-SE -->
+<section style="padding:0 0 96px">
+<div style="max-width:1344px;margin:0 auto;padding:0 48px;box-sizing:border-box">
+<div style="border-radius:36px;background:#0B0B0F;color:#fff;padding:64px;display:flex;flex-wrap:wrap;gap:40px;align-items:center;justify-content:space-between">
+<div style="flex:1 1 480px;display:flex;flex-direction:column;gap:16px">
+<span style="font-size:14px;font-weight:700;letter-spacing:1.5px;color:#58C8C0">TRABALHE CONOSCO</span>
+<h2 style="margin:0;font-size:46px;line-height:1.08;letter-spacing:-1.5px;font-weight:800">Junte-se! Oportunidades podem transformar vidas.</h2>
+<p style="margin:0;font-size:18px;line-height:1.6;opacity:.85;max-width:620px">Acreditamos que tecnologia deve aproximar pessoas, e não afastá-las. Faça parte de um grupo que gera valor sem abrir mão do desenvolvimento humano e que aposta na sustentabilidade.</p>
+</div>
+<a href="#contato" style="display:inline-flex;align-items:center;min-height:56px;padding:0 36px;border-radius:999px;background:#58C8C0;color:#0B0B0F;font-weight:800;font-size:17px">Quero fazer parte</a>
+</div>
+</div>
+</section>
+
+<!-- FAQ -->
+<section id="faq" class="faqbg" style="padding:96px 0">
+<div style="max-width:1344px;margin:0 auto;padding:0 48px;box-sizing:border-box;display:flex;flex-wrap:wrap;gap:56px">
+<div style="flex:1 1 340px;min-width:0;display:flex;flex-direction:column;gap:16px">
+<span style="font-size:14px;font-weight:700;letter-spacing:1.5px;color:#6B50A4">FAQ — APLICATIVO</span>
+<h2 style="margin:0;font-size:46px;line-height:1.08;letter-spacing:-1.5px;font-weight:800">Perguntas frequentes</h2>
+<p style="margin:0;font-size:18px;line-height:1.6;color:#3A3A44">Não encontrou o que procurava? Fale com nossa equipe pelos canais de contato.</p>
+</div>
+<div style="flex:2 1 560px;min-width:0;display:flex;flex-direction:column;gap:12px">
+<sc-for list="{{faqs}}" as="f" hint-placeholder-count="5">
+<div style="background:#fff;border-radius:20px;padding:4px 28px">
+<button onClick="{{f.toggle}}" aria-expanded="{{f.expanded}}" style="width:100%;min-height:68px;display:flex;align-items:center;justify-content:space-between;gap:16px;background:none;border:none;font-family:inherit;font-size:18px;font-weight:700;text-align:left;cursor:pointer;color:#0B0B0F;padding:0">
+<span>{{f.q}}</span><span style="flex:none;font-size:26px;color:#6B50A4">{{f.icon}}</span>
+</button>
+<sc-if value="{{f.open}}" hint-placeholder-val="{{ false }}">
+<p style="margin:0 0 24px;font-size:16px;line-height:1.65;color:#3A3A44">{{f.a}}</p>
+</sc-if>
+</div>
+</sc-for>
+</div>
+</div>
+</section>
+
+<!-- CONTATO -->
+<section id="contato" style="padding:96px 0 72px">
+<div style="max-width:1344px;margin:0 auto;padding:0 48px;box-sizing:border-box;display:flex;flex-direction:column;gap:40px">
+<div style="max-width:720px;display:flex;flex-direction:column;gap:16px">
+<span style="font-size:14px;font-weight:700;letter-spacing:1.5px;color:#25706C">CONTATO</span>
+<h2 style="margin:0;font-size:46px;line-height:1.08;letter-spacing:-1.5px;font-weight:800">Vamos conversar? É fácil falar com a equipe.</h2>
+</div>
+<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:20px">
+<a href="mailto:grupo.wade@gmail.com" style="display:flex;flex-direction:column;gap:8px;padding:28px;border-radius:24px;border:1.5px solid #E6E1EE"><strong style="font-size:20px">E-mail</strong><span style="font-size:15px;color:#3A3A44">grupo.wade@gmail.com</span></a>
+<a href="tel:+555436015330" style="display:flex;flex-direction:column;gap:8px;padding:28px;border-radius:24px;border:1.5px solid #E6E1EE"><strong style="font-size:20px">Telefone</strong><span style="font-size:15px;color:#3A3A44">(54) 3601-5330</span></a>
+<a href="#contato" style="display:flex;flex-direction:column;gap:8px;padding:28px;border-radius:24px;border:1.5px solid #E6E1EE"><strong style="font-size:20px">Instagram</strong><span style="font-size:15px;color:#3A3A44">[@ do Instagram]</span></a>
+</div>
+</div>
+</section>
+
+<!-- RODAPÉ -->
+<footer style="background:#000;color:#fff;padding:56px 0 40px">
+<div style="max-width:1344px;margin:0 auto;padding:0 48px;box-sizing:border-box;display:flex;flex-wrap:wrap;gap:40px;justify-content:space-between;align-items:flex-start">
+<div style="display:flex;flex-direction:column;gap:16px;max-width:380px">
+<img src="./assets/6cd9b8435c7ddcbd6725c7cb0a6e3b4b.webp" alt="Wade Brasil" style="height:52px;width:auto;display:block;align-self:flex-start">
+<span style="font-size:14px;line-height:1.6;color:#C9C6D2">Construindo o futuro com propósito. Wade, BeFarm e BlueSafe.</span>
+</div>
+<div style="display:flex;flex-direction:column;gap:8px;font-size:14px;color:#C9C6D2">
+<strong style="color:#fff">Contato</strong>
+<span>(54) 3601-5330</span><span>grupo.wade@gmail.com</span><span>www.grupowade.com.br</span>
+</div>
+<div style="display:flex;flex-direction:column;gap:8px;font-size:14px">
+<strong>Navegação</strong>
+<a href="#marcas" style="color:#C9C6D2">Marcas</a><a href="#produtos" style="color:#C9C6D2">Produtos</a><a href="#historia" style="color:#C9C6D2">História</a><a href="#app" style="color:#C9C6D2">Aplicativo</a>
+</div>
+</div>
+</footer>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":7600}}'>
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.state = { pIdx: 0, filter: 'all', tl: 0, faq: 0, mode: 'cep', query: '', searched: false, status: 'idle', msg: '', found: [] };
+  }
+  async runSearch() {
+    const mode = this.state.mode;
+    const q = String(this.state.query || '').trim();
+    const fail = (msg) => this.setState({ searched: false, status: 'error', msg, found: [] });
+    if (!q) { fail(mode === 'cep' ? 'Digite seu CEP.' : 'Digite seu e-mail.'); return; }
+    let url;
+    if (mode === 'cep') {
+      const cep = q.replace(/\D/g, '');
+      if (cep.length !== 8) { fail('CEP inválido. Digite os 8 números do CEP.'); return; }
+      url = '/vendedores/proximos/' + cep + '?limite=3';
+    } else {
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(q)) { fail('E-mail inválido.'); return; }
+      url = '/vendedores/email/' + encodeURIComponent(q);
+    }
+    const base = String(window.WADE_API_URL || '').replace(/\/$/, '');
+    const id = this._req = (this._req || 0) + 1;
+    this.setState({ searched: false, status: 'loading', msg: '', found: [] });
+    try {
+      const resp = await fetch(base + url);
+      const data = await resp.json();
+      if (id !== this._req) return;
+      if (!resp.ok) { fail(data.erro || 'Não foi possível buscar consultores.'); return; }
+      const list = Array.isArray(data.vendedores) ? data.vendedores : [];
+      if (!list.length) {
+        this.setState({ searched: false, status: 'empty', msg: mode === 'cep' ? 'Nenhum consultor encontrado por enquanto.' : 'Nenhum consultor encontrado com este e-mail.', found: [] });
+        return;
+      }
+      this.setState({ searched: true, status: 'ok', msg: '', found: list });
+    } catch (e) {
+      if (id !== this._req) return;
+      fail('Não foi possível conectar ao servidor.');
+    }
+  }
+  renderVals() {
+    const s = this.state;
+    const all = [
+      { k: 'wade', img: './assets/abfddf0539989801123f0522fc573562.png', alt: 'Pote da Máscara Rescue da Wade', bg: '#F3F0F9', fit: 'contain', pad: '40px', brand: 'WADE', tagColor: '#6B50A4', name: 'Rescue Máscara', desc: 'Brilho, maciez e leveza, com buriti, murumuru e vitamina E.' },
+      { k: 'befarm', img: './assets/02c73ce1f76cfb45b88bf59c2b4382da.jpg', alt: 'Embalagem de café BeFarm Origens Alta Mogiana', bg: '#F1E7DA', fit: 'cover', pad: '0', brand: 'BEFARM', tagColor: '#5E7F3A', name: 'Café Origens', desc: 'Alta Mogiana, em embalagem artesanal de 250 g.' },
+      { k: 'bluesafe', img: './assets/9b0e1706f51404fef995dd09abcd4434.png', alt: 'Frasco do Lava Roupas Enzimático BlueSafe', bg: '#F3F0F9', fit: 'contain', pad: '28px', brand: 'BLUESAFE', tagColor: '#25706C', name: 'Lava Roupas Enzimático', desc: 'Proteína de alta performance, cores e tecidos protegidos.' },
+      { k: 'wade', img: './assets/cc7c635395e4b5cad962ebcfab810264.png', alt: 'Frasco do Shampoo Rescue da Wade', bg: '#F3F0F9', fit: 'contain', pad: '36px', brand: 'WADE', tagColor: '#6B50A4', name: 'Rescue Shampoo', desc: 'Nutrição profunda com óleo de argan e proteína da seda.' },
+      { k: 'befarm', img: './assets/3dcdcd873cc97c4f3804fe6ad4fc07a2.jpg', alt: 'Embalagem de Mini Crackers BeFarm', bg: '#F6E6EE', fit: 'cover', pad: '0', brand: 'BEFARM', tagColor: '#5E7F3A', name: 'Mini Crackers', desc: 'Crocantes e práticos para o dia a dia.' },
+      { k: 'bluesafe', img: './assets/1be0ec72c8485e8e64391d0598ca0900.png', alt: 'Frasco do Lava Roupas com Álcool BlueSafe', bg: '#EEF7F6', fit: 'contain', pad: '28px', brand: 'BLUESAFE', tagColor: '#25706C', name: 'Lava Roupas com Álcool', desc: 'Limpeza profunda com baixa espuma e frescor.' },
+      { k: 'wade', img: './assets/e3d804883a81faebc49ec94ba242e38e.png', alt: 'Frasco do Condicionador Rescue da Wade', bg: '#EEF7F6', fit: 'contain', pad: '36px', brand: 'WADE', tagColor: '#6B50A4', name: 'Rescue Condicionador', desc: 'Cuidado diário para cabelos com brilho e leveza.' },
+      { k: 'befarm', img: './assets/dc7136385ebcb01bdb96b67bc0e897ba.jpg', alt: 'Embalagem de Biscoito Integral BeFarm', bg: '#F1F3EA', fit: 'cover', pad: '0', brand: 'BEFARM', tagColor: '#5E7F3A', name: 'Biscoito Integral', desc: 'Nutrição com sabor, em uma embalagem leve e natural.' }
+    ];
+    const pal = {
+      wade: { main: '#6B50A4', onMain: '#FFFFFF', text: '#6B50A4', tint: '#F3F0F9' },
+      befarm: { main: '#A2C279', onMain: '#0B0B0F', text: '#4E6B2D', tint: '#F1F5E8' },
+      bluesafe: { main: '#7ABFBC', onMain: '#0B0B0F', text: '#25706C', tint: '#E8F4F3' }
+    };
+    const painted = all.map((x) => Object.assign({}, x, pal[x.k], { bg: x.fit === 'contain' ? pal[x.k].tint : x.bg }));
+    const products = s.filter === 'all' ? painted : painted.filter((x) => x.k === s.filter);
+    const maxIdx = Math.max(0, products.length - 3);
+    const idx = Math.min(s.pIdx, maxIdx);
+    const tabsRaw = [
+      { k: 'all', label: 'Todos' }, { k: 'wade', label: 'Wade' }, { k: 'befarm', label: 'BeFarm' }, { k: 'bluesafe', label: 'BlueSafe' }
+    ];
+    const tabs = tabsRaw.map((t) => {
+      const on = s.filter === t.k;
+      const c = t.k === 'all' ? { main: '#0B0B0F', onMain: '#FFFFFF', text: '#0B0B0F' } : pal[t.k];
+      return { label: t.label, bg: on ? c.main : '#fff', color: on ? c.onMain : c.text, border: c.main, pick: () => this.setState({ filter: t.k, pIdx: 0 }) };
+    });
+    const tlRaw = [
+      { label: '2018 · A pergunta', year: '2018', title: 'Uma inquietação muda tudo', text: 'O fundador conclui a formação em Direito e aprofunda estudos em Direito Internacional, sustentabilidade, inovação e economia. Ao ver o contraste entre os mercados mais desenvolvidos e a realidade empresarial brasileira, surge a pergunta: e se fosse possível criar uma empresa diferente?' },
+      { label: '2019 · Nasce a Wade', year: '2019', title: 'A visão ganha forma', text: 'Ao final de 2019 nasce a Wade. Os primeiros produtos chegam por meio da nutrição e, com investimentos em pesquisa, desenvolvimento e inovação, a atuação se amplia para biocosméticos e soluções de limpeza.' },
+      { label: '2025 · Novas marcas', year: '2025', title: 'Nascem a BeFarm e a BlueSafe', text: 'O crescimento da operação pede uma nova evolução. A BeFarm cuida de nutrição, bem-estar e produtos naturais; a BlueSafe, de soluções inteligentes de limpeza e cuidados com o ambiente.' },
+      { label: '2025 · App próprio', year: '2025', title: 'Independência tecnológica', text: 'A Wade conquista a propriedade integral do seu aplicativo, que integra cadastro, logística, pedidos e comissões em um ambiente mais transparente, eficiente e seguro.' },
+      { label: '2026 · Biopark', year: '2026', title: 'Uma nova fase de desenvolvimento', text: 'A aproximação com o Biopark conecta a Wade a um dos mais relevantes ecossistemas de inovação do Brasil, com foco em pesquisa, desenvolvimento tecnológico, industrialização, educação corporativa e expansão sustentável.' }
+    ];
+    const timeNodes = tlRaw.map((n, i) => {
+      const on = s.tl === i;
+      return { label: n.label, bg: on ? '#6B50A4' : '#fff', color: on ? '#fff' : '#0B0B0F', border: on ? '#6B50A4' : '#CDBBE6', pick: () => this.setState({ tl: i }) };
+    });
+    const beliefs = [
+      { n: '01', bg: '#0B0B0F', color: '#fff', text: 'empresas têm a responsabilidade de gerar valor econômico sem abrir mão do desenvolvimento humano.' },
+      { n: '02', bg: '#6B50A4', color: '#fff', text: 'tecnologia deve aproximar pessoas, e não afastá-las.' },
+      { n: '03', bg: '#5E7F3A', color: '#fff', text: 'qualidade não é um diferencial, mas uma obrigação.' },
+      { n: '04', bg: '#2674B5', color: '#fff', text: 'oportunidades podem transformar vidas.' }
+    ];
+    const features = [
+      { n: '1', title: 'Acesso por convite', text: 'Organização e rastreabilidade desde o primeiro contato.' },
+      { n: '2', title: 'Compras integradas', text: 'Venda direta de forma simples e eficiente.' },
+      { n: '3', title: 'Comissões automáticas', text: 'Seus ganhos calculados em tempo real.' },
+      { n: '4', title: 'Gestão de rede', text: 'Acompanhe o crescimento da sua equipe.' },
+      { n: '5', title: 'Controle financeiro', text: 'Saque com clareza e previsibilidade.' }
+    ];
+    const faqRaw = [
+      { q: 'Quem pode usar o aplicativo da Wade?', a: 'O acesso ao aplicativo é por convite, para garantir organização e rastreabilidade desde o primeiro contato. Procure um consultor Wade para receber o seu.' },
+      { q: 'O que posso fazer dentro do aplicativo?', a: 'Fazer compras integradas, acompanhar comissões calculadas automaticamente em tempo real, gerir a sua rede e ter controle financeiro, com saque claro e previsível. Também navegue pelas lojas BeFarm e BlueSafe.' },
+      { q: 'Como funciona o desconto em escala?', a: 'Os descontos crescem conforme a quantidade de produtos comprados. [Confirmar faixas e regras com a Wade]' },
+      { q: 'Como baixo o aplicativo?', a: 'O app está disponível na App Store e no Google Play. Depois de instalar, entre com o convite recebido do seu consultor.' },
+      { q: 'Como encontro um consultor perto de mim?', a: 'Na seção Consultores deste site, informe seu CEP ou e-mail e veja quem pode atender você.' }
+    ];
+    const faqs = faqRaw.map((x, i) => {
+      const o = s.faq === i;
+      return { q: x.q, a: x.a, open: o, expanded: o ? 'true' : 'false', icon: o ? '−' : '+', toggle: () => this.setState({ faq: o ? -1 : i }) };
+    });
+    const cepMode = s.mode === 'cep';
+    const results = s.found.map((c) => {
+      const tel = String(c.telefone || '').trim();
+      const mail = String(c.email || '').trim();
+      const dg = tel.replace(/\D/g, '');
+      const hasDist = typeof c.distancia === 'number' && isFinite(c.distancia);
+      const km = hasDist ? c.distancia : 0;
+      const nome = String(c.nome || '').trim();
+      return {
+        initial: (nome.charAt(0) || '?').toUpperCase(),
+        name: nome,
+        hasDist,
+        dist: km < 1 ? 'a menos de 1 km de você' : 'a ' + km.toLocaleString('pt-BR', { maximumFractionDigits: 1 }) + ' km de você',
+        hasPhone: !!tel,
+        phone: /^\d{10,11}$/.test(tel) ? '(' + tel.slice(0, 2) + ') ' + tel.slice(2, tel.length - 4) + '-' + tel.slice(-4) : tel,
+        phoneHref: 'tel:' + (dg.length >= 12 ? '+' + dg : dg.length >= 10 ? '+55' + dg : dg),
+        hasEmail: !!mail,
+        email: mail,
+        emailHref: 'mailto:' + mail
+      };
+    });
+    const hints = {
+      idle: 'Os consultores mais próximos aparecem aqui depois da busca.',
+      loading: 'Buscando consultores...'
+    };
+    return {
+      products, tabs, timeNodes, beliefs, features, faqs, results,
+      tl: tlRaw[s.tl],
+      trackX: -idx * 364,
+      prev: () => this.setState({ pIdx: Math.max(0, idx - 1) }),
+      next: () => this.setState({ pIdx: Math.min(maxIdx, idx + 1) }),
+      accent: s.filter === 'all' ? '#6B50A4' : pal[s.filter].main, accentOn: s.filter === 'all' ? '#FFFFFF' : pal[s.filter].onMain,
+      prevOp: idx === 0 ? 0.35 : 1, nextOp: idx >= maxIdx ? 0.35 : 1,
+      goWade: () => this.setState({ filter: 'wade', pIdx: 0 }),
+      goBefarm: () => this.setState({ filter: 'befarm', pIdx: 0 }),
+      goBlue: () => this.setState({ filter: 'bluesafe', pIdx: 0 }),
+      modeCep: () => this.setState({ mode: 'cep', query: '', searched: false, status: 'idle', msg: '', found: [] }),
+      modeMail: () => this.setState({ mode: 'mail', query: '', searched: false, status: 'idle', msg: '', found: [] }),
+      cepBg: cepMode ? '#6B50A4' : '#fff', cepColor: cepMode ? '#fff' : '#0B0B0F', cepBorder: cepMode ? '#6B50A4' : '#CDBBE6',
+      mailBg: cepMode ? '#fff' : '#6B50A4', mailColor: cepMode ? '#0B0B0F' : '#fff', mailBorder: cepMode ? '#CDBBE6' : '#6B50A4',
+      placeholder: cepMode ? 'Digite seu CEP' : 'Digite seu e-mail',
+      query: s.query,
+      typeQuery: (e) => this.setState({ query: e.target.value }),
+      search: () => this.runSearch(),
+      searched: s.searched, notSearched: !s.searched,
+      hint: s.status === 'idle' || s.status === 'loading' ? hints[s.status] : s.msg
+    };
+  }
+}
+</script>
+</body>
+</html>

@@ -1,718 +1,351 @@
+require("dotenv").config();
+
 const express = require("express");
 const cors = require("cors");
 const path = require("path");
 const pool = require("./db");
 
-const BASE_URL = process.env.BASE_URL || "http://localhost:3000";
-
 const app = express();
+const PORTA = process.env.PORT || 3000;
+const PASTA_FRONTEND = path.join(__dirname, "../frontend");
 
 app.use(cors());
-app.use(express.json());
+app.use(express.json({ limit: "1mb" }));
 
-app.use(express.static(path.join(__dirname, "../Frontend")));
+// Frontend integrado: o Render entrega o site e a API pela mesma origem.
+app.get("/", (req, res) => {
+    res.sendFile(path.join(PASTA_FRONTEND, "Main.dc.html"));
+});
+app.use(express.static(PASTA_FRONTEND));
 
-// ==================================
-// ROTA PRINCIPAL
-// ==================================
-
-app.get("/", async (req, res) => {
+app.get("/status", async (req, res) => {
     try {
-        const resultado = await pool.query("SELECT NOW()");
-
-        console.log("PostgreSQL conectado!");
-        console.log(resultado.rows[0]);
-
-        res.send("Servidor funcionando! PostgreSQL conectado.");
-
+        await pool.query("SELECT NOW()");
+        res.json({ status: "ok", banco: "conectado" });
     } catch (erro) {
         console.error("Erro ao conectar ao PostgreSQL:", erro);
-
-        res.status(500).send(
-            "Erro ao conectar ao PostgreSQL."
-        );
+        res.status(500).json({ status: "erro", banco: "indisponível" });
     }
 });
 
-// ==================================
-// CADASTRAR VENDEDOR
-// ==================================
+class ErroApi extends Error {
+    constructor(status, mensagem) {
+        super(mensagem);
+        this.status = status;
+    }
+}
 
-app.post("/vendedores", async (req, res) => {
+const COLUNAS_PUBLICAS = "id, nome, email, telefone, cep, latitude, longitude";
 
-    try {
+// Cria a tabela de cache sem exigir uma migração manual no deploy.
+let cacheTableReady;
+async function prepararCache() {
+    if (!cacheTableReady) {
+        cacheTableReady = pool.query(`
+            CREATE TABLE IF NOT EXISTS cep_localizacoes (
+                cep CHAR(8) PRIMARY KEY,
+                endereco JSONB NOT NULL,
+                latitude DOUBLE PRECISION NOT NULL,
+                longitude DOUBLE PRECISION NOT NULL,
+                atualizado_em TIMESTAMPTZ NOT NULL DEFAULT NOW()
+            )
+        `).catch((erro) => {
+            cacheTableReady = null;
+            throw erro;
+        });
+    }
+    return cacheTableReady;
+}
 
-        const { nome, email, telefone, cpf, cep } = req.body;
+// Nominatim público: no máximo uma solicitação por segundo por instância.
+// O cache persistente no PostgreSQL evita consultar CEPs já conhecidos.
+let filaNominatim = Promise.resolve();
+let ultimaConsultaNominatim = 0;
 
-
-        // ==================================
-        // VERIFICAR DADOS
-        // ==================================
-
-        if (!nome || !cep) {
-
-            return res.status(400).json({
-                erro: "Nome e CEP são obrigatórios."
-            });
-
+function consultarNominatim(url) {
+    const tarefa = filaNominatim.then(async () => {
+        const intervalo = Date.now() - ultimaConsultaNominatim;
+        if (intervalo < 1100) {
+            await new Promise(resolve => setTimeout(resolve, 1100 - intervalo));
         }
 
+        ultimaConsultaNominatim = Date.now();
 
-        // Remove caracteres do CEP
-        // Exemplo: 85913-130 → 85913130
+        const resposta = await fetch(url, {
+            headers: {
+                "User-Agent": process.env.NOMINATIM_USER_AGENT ||
+                    "WadeBrasil/1.0 (projeto acadêmico)"
+            },
+            signal: AbortSignal.timeout(15000)
+        });
 
-        const cepLimpo = cep.replace(/\D/g, "");
+        const texto = await resposta.text();
 
-
-        if (cepLimpo.length !== 8) {
-
-            return res.status(400).json({
-                erro: "CEP inválido."
-            });
-
+        if (resposta.status === 429) {
+            const retry = resposta.headers.get("retry-after");
+            throw new ErroApi(
+                503,
+                `O serviço de mapas está temporariamente limitando as consultas. Tente novamente${retry ? ` em ${retry} segundos` : " mais tarde"}.`
+            );
         }
 
+        if (!resposta.ok) {
+            console.error("Nominatim HTTP", resposta.status, texto.slice(0, 500));
+            throw new ErroApi(502, "O serviço de mapas está temporariamente indisponível.");
+        }
 
-        // ==================================
-        // BUSCAR CEP NO VIACEP
-        // ==================================
-
-        const respostaViaCep = await fetch(
-            `https://viacep.com.br/ws/${cepLimpo}/json/`
-        );
-
-        // Pega a resposta como texto primeiro
-        const textoViaCep = await respostaViaCep.text();
-
-        console.log("Resposta do ViaCEP:");
-        console.log(textoViaCep);
-
-        let endereco;
-
+        let dados;
         try {
-
-            endereco = JSON.parse(textoViaCep);
-
-        } catch (erro) {
-
-            console.error("O ViaCEP não retornou JSON.");
-
-            return res.status(500).json({
-                erro: "O serviço ViaCEP não está disponível no momento."
-            });
-
+            dados = JSON.parse(texto);
+        } catch {
+            console.error("Resposta inesperada do Nominatim:", texto.slice(0, 500));
+            throw new ErroApi(502, "O serviço de mapas retornou uma resposta inválida.");
         }
 
+        return dados;
+    });
 
-        // ==================================
-        // CEP NÃO ENCONTRADO
-        // ==================================
+    // Mantém a fila funcional mesmo se uma chamada falhar.
+    filaNominatim = tarefa.catch(() => {});
+    return tarefa;
+}
 
-        if (endereco.erro) {
-
-            return res.status(400).json({
-                erro: "CEP não encontrado."
-            });
-
-        }
-
-
-        console.log(
-            "Endereço encontrado:",
-            endereco
-        );
-
-        // ==================================
-        // BUSCAR LOCALIZAÇÃO NO NOMINATIM
-        // ==================================
-
-        // Vamos tentar primeiro o endereço completo
-        const buscas = [
-
-            `${endereco.logradouro}, ${endereco.bairro}, ${endereco.localidade}, ${endereco.uf}, Brasil`,
-
-            `${endereco.bairro}, ${endereco.localidade}, ${endereco.uf}, Brasil`,
-
-            `${endereco.localidade}, ${endereco.uf}, Brasil`
-
-        ];
-
-        let localizacoes = [];
-
-
-        // ==================================
-        // TENTAR AS BUSCAS
-        // ==================================
-
-        for (const busca of buscas) {
-
-            console.log("Tentando localizar:");
-            console.log(busca);
-
-            const url =
-                "https://nominatim.openstreetmap.org/search?" +
-                "format=jsonv2" +
-                "&q=" +
-                encodeURIComponent(busca) +
-                "&countrycodes=br" +
-                "&limit=1";
-
-            const respostaNominatim = await fetch(url, {
-
-    headers: {
-        "User-Agent": "WadeBrasil/1.0 (projeto acadêmico)"
+async function localizarCep(cep) {
+    const cepLimpo = String(cep || "").replace(/\D/g, "");
+    if (cepLimpo.length !== 8) {
+        throw new ErroApi(400, "CEP inválido. Informe os 8 números.");
     }
 
-});
+    await prepararCache();
 
-console.log(
-    "Status do Nominatim:",
-    respostaNominatim.status
-);
+    // 1) Cache persistente: não chama ViaCEP/Nominatim se o CEP já foi localizado.
+    const salvo = await pool.query(
+        `SELECT cep, endereco, latitude, longitude
+         FROM cep_localizacoes WHERE cep = $1`,
+        [cepLimpo]
+    );
 
-const textoNominatim =
-    await respostaNominatim.text();
+    if (salvo.rows.length) {
+        const item = salvo.rows[0];
+        return {
+            cep: item.cep.trim(),
+            endereco: item.endereco,
+            latitude: Number(item.latitude),
+            longitude: Number(item.longitude)
+        };
+    }
 
-console.log("Resposta do Nominatim:");
-console.log(textoNominatim);
-
-            try {
-
-                localizacoes =
-                    JSON.parse(textoNominatim);
-
-            } catch (erro) {
-
-                console.error(
-                    "O Nominatim não retornou JSON."
-                );
-
-                continue;
-
-            }
-
-
-            // Se encontrou, para o loop
-            if (localizacoes.length > 0) {
-
-                console.log(
-                    "Localização encontrada!"
-                );
-
-                break;
-
-            }
-
-        }
-
-
-        // ==================================
-        // NÃO ENCONTROU LOCALIZAÇÃO
-        // ==================================
-
-        if (localizacoes.length === 0) {
-
-            return res.status(400).json({
-
-                erro:
-                    "Não foi possível localizar o endereço no mapa."
-
-            });
-
-        }
-
-
-        // ==================================
-        // PEGAR LATITUDE E LONGITUDE
-        // ==================================
-
-        const latitude =
-            parseFloat(localizacoes[0].lat);
-
-        const longitude =
-            parseFloat(localizacoes[0].lon);
-
-
-        console.log(
-            "Latitude:",
-            latitude
+    // 2) Consulta ViaCEP.
+    let endereco;
+    try {
+        const resposta = await fetch(
+            `https://viacep.com.br/ws/${cepLimpo}/json/`,
+            { signal: AbortSignal.timeout(12000) }
         );
+        if (!resposta.ok) throw new Error(`ViaCEP HTTP ${resposta.status}`);
+        endereco = await resposta.json();
+    } catch (erro) {
+        console.error("Falha ao consultar ViaCEP:", erro.message);
+        throw new ErroApi(502, "O serviço de CEP está indisponível. Tente novamente.");
+    }
 
-        console.log(
-            "Longitude:",
-            longitude
-        );
+    if (endereco.erro) {
+        throw new ErroApi(404, "CEP não encontrado.");
+    }
 
-        // ==================================
-        // NÃO ENCONTROU LOCALIZAÇÃO
-        // ==================================
+    // 3) Busca geográfica: tenta do endereço mais específico ao município.
+    const montar = (...partes) => partes.filter(Boolean).join(", ");
+    const buscas = [
+        montar(endereco.logradouro, endereco.bairro, endereco.localidade, endereco.uf, "Brasil"),
+        montar(endereco.bairro, endereco.localidade, endereco.uf, "Brasil"),
+        montar(endereco.localidade, endereco.uf, "Brasil")
+    ].filter((valor, indice, lista) => valor && lista.indexOf(valor) === indice);
 
-        if (localizacoes.length === 0) {
+    let localizacao = null;
 
-            return res.status(400).json({
-                erro:
-                    "O CEP existe, mas não foi possível localizar o endereço no mapa."
-            });
+    for (const busca of buscas) {
+        const url = "https://nominatim.openstreetmap.org/search?" +
+            "format=jsonv2&q=" + encodeURIComponent(busca) +
+            "&countrycodes=br&limit=1";
 
+        const encontrados = await consultarNominatim(url);
+        if (Array.isArray(encontrados) && encontrados.length) {
+            localizacao = encontrados[0];
+            break;
+        }
+    }
+
+    if (!localizacao) {
+        throw new ErroApi(404, "O CEP existe, mas não foi possível encontrar sua região no mapa.");
+    }
+
+    const latitude = Number(localizacao.lat);
+    const longitude = Number(localizacao.lon);
+    if (!Number.isFinite(latitude) || !Number.isFinite(longitude)) {
+        throw new ErroApi(502, "O serviço de mapas não retornou coordenadas válidas.");
+    }
+
+    const resultado = {
+        cep: cepLimpo,
+        endereco,
+        latitude,
+        longitude
+    };
+
+    // 4) Persiste as coordenadas para pesquisas futuras.
+    await pool.query(
+        `INSERT INTO cep_localizacoes (cep, endereco, latitude, longitude)
+         VALUES ($1, $2::jsonb, $3, $4)
+         ON CONFLICT (cep) DO UPDATE SET
+             endereco = EXCLUDED.endereco,
+             latitude = EXCLUDED.latitude,
+             longitude = EXCLUDED.longitude,
+             atualizado_em = NOW()`,
+        [cepLimpo, JSON.stringify(endereco), latitude, longitude]
+    );
+
+    return resultado;
+}
+
+function distanciaKm(lat1, lon1, lat2, lon2) {
+    const R = 6371;
+    const dLat = (lat2 - lat1) * Math.PI / 180;
+    const dLon = (lon2 - lon1) * Math.PI / 180;
+    const a =
+        Math.sin(dLat / 2) ** 2 +
+        Math.cos(lat1 * Math.PI / 180) *
+        Math.cos(lat2 * Math.PI / 180) *
+        Math.sin(dLon / 2) ** 2;
+    return R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+}
+
+function responderErro(res, erro, mensagemPadrao) {
+    if (erro instanceof ErroApi) {
+        return res.status(erro.status).json({ erro: erro.message });
+    }
+    console.error(mensagemPadrao, erro);
+    return res.status(500).json({ erro: mensagemPadrao });
+}
+
+// Cadastrar consultor (mantém compatibilidade com o formulário antigo).
+app.post("/vendedores", async (req, res) => {
+    try {
+        const { nome, email, telefone, cpf, cep } = req.body || {};
+        if (!nome || !cep) {
+            return res.status(400).json({ erro: "Nome e CEP são obrigatórios." });
         }
 
-
-
-        // ==================================
-        // SALVAR NO POSTGRESQL
-        // ==================================
-
+        const local = await localizarCep(cep);
         const resultado = await pool.query(
             `INSERT INTO vendedores
-            (nome, email, telefone, cpf, cep, latitude, longitude)
-            VALUES ($1, $2, $3, $4, $5, $6, $7)
-            RETURNING *`,
-            [nome, email, telefone, cpf, cepLimpo, latitude, longitude]
+             (nome, email, telefone, cpf, cep, latitude, longitude)
+             VALUES ($1, $2, $3, $4, $5, $6, $7)
+             RETURNING ${COLUNAS_PUBLICAS}`,
+            [
+                String(nome).trim(),
+                email ? String(email).trim() : null,
+                telefone ? String(telefone).trim() : null,
+                cpf ? String(cpf).trim() : null,
+                local.cep,
+                local.latitude,
+                local.longitude
+            ]
         );
-
-
-        // ==================================
-        // RESPONDER AO FRONTEND
-        // ==================================
 
         res.status(201).json({
-
-            mensagem:
-                "Vendedor cadastrado com sucesso!",
-
-            vendedor:
-                resultado.rows[0]
-
+            mensagem: "Consultor cadastrado com sucesso!",
+            vendedor: resultado.rows[0]
         });
-
-
     } catch (erro) {
-
-        console.error(
-            "Erro ao cadastrar vendedor:",
-            erro
-        );
-
-
-        res.status(500).json({
-
-            erro:
-                "Erro ao cadastrar vendedor."
-
-        });
-
+        responderErro(res, erro, "Erro ao cadastrar consultor.");
     }
-
 });
 
-// ==================================
-// BUSCAR TODOS OS VENDEDORES
-// ==================================
-
+// Listagem pública sem CPF.
 app.get("/vendedores", async (req, res) => {
-
     try {
-
         const resultado = await pool.query(
-            `SELECT *
-             FROM vendedores
-             ORDER BY id`
+            `SELECT ${COLUNAS_PUBLICAS} FROM vendedores ORDER BY id`
         );
-
         res.json(resultado.rows);
-
     } catch (erro) {
-
-        console.error(
-            "Erro ao buscar vendedores:",
-            erro
-        );
-
-        res.status(500).json({
-            erro: "Erro ao buscar vendedores."
-        });
-
+        responderErro(res, erro, "Erro ao buscar consultores.");
     }
-
 });
 
-// ==================================
-// BUSCAR LOCALIZAÇÃO DO CLIENTE
-// ==================================
-
+// Localização de um CEP.
 app.get("/localizar/:cep", async (req, res) => {
-
     try {
+        res.json(await localizarCep(req.params.cep));
+    } catch (erro) {
+        responderErro(res, erro, "Erro ao localizar CEP.");
+    }
+});
 
-        const cep = req.params.cep;
-
-        // Remove pontos, traços e espaços
-        const cepLimpo = cep.replace(/\D/g, "");
-
-        // Verificar se o CEP possui 8 números
-        if (cepLimpo.length !== 8) {
-
-            return res.status(400).json({
-                erro: "CEP inválido."
-            });
-
-        }
-
-
-        // ==================================
-        // BUSCAR CEP NO VIACEP
-        // ==================================
-
-        const respostaViaCep = await fetch(
-            `https://viacep.com.br/ws/${cepLimpo}/json/`
+// Consultores mais próximos de um CEP. Ex.: ?limite=3
+app.get("/vendedores/proximos/:cep", async (req, res) => {
+    try {
+        const cliente = await localizarCep(req.params.cep);
+        const resultado = await pool.query(
+            `SELECT ${COLUNAS_PUBLICAS}
+             FROM vendedores
+             WHERE latitude IS NOT NULL AND longitude IS NOT NULL`
         );
 
-        const textoViaCep =
-            await respostaViaCep.text();
+        let vendedores = resultado.rows.map(vendedor => ({
+            ...vendedor,
+            distancia: distanciaKm(
+                cliente.latitude,
+                cliente.longitude,
+                Number(vendedor.latitude),
+                Number(vendedor.longitude)
+            )
+        }));
 
-        let endereco;
+        vendedores.sort((a, b) => a.distancia - b.distancia);
 
-        try {
-
-            endereco = JSON.parse(textoViaCep);
-            console.log("Resposta recebida do ViaCEP:", textoViaCep);
-
-        } catch (erro) {
-
-            return res.status(500).json({
-                erro:
-                    "O serviço ViaCEP não está disponível no momento."
-            });
-
+        const limite = Number.parseInt(req.query.limite, 10);
+        if (Number.isInteger(limite) && limite > 0) {
+            vendedores = vendedores.slice(0, Math.min(limite, 50));
         }
-
-
-        // ==================================
-        // VERIFICAR CEP
-        // ==================================
-
-        if (endereco.erro) {
-
-            return res.status(400).json({
-                erro: "CEP não encontrado."
-            });
-
-        }
-
-
-        console.log(
-            "Endereço do cliente:",
-            endereco
-        );
-
-
-        // ==================================
-        // BUSCAR LOCALIZAÇÃO
-        // ==================================
-
-        const buscas = [
-
-            `${endereco.logradouro}, ${endereco.bairro}, ${endereco.localidade}, ${endereco.uf}, Brasil`,
-
-            `${endereco.bairro}, ${endereco.localidade}, ${endereco.uf}, Brasil`,
-
-            `${endereco.localidade}, ${endereco.uf}, Brasil`
-
-        ];
-
-
-        let localizacoes = [];
-
-
-        // ==================================
-        // TENTAR BUSCAS
-        // ==================================
-
-        for (const busca of buscas) {
-
-            console.log("Tentando localizar cliente:");
-            console.log(busca);
-
-            const url =
-                "https://nominatim.openstreetmap.org/search?" +
-                "format=jsonv2" +
-                "&q=" +
-                encodeURIComponent(busca) +
-                "&countrycodes=br" +
-                "&limit=1";
-
-            const respostaNominatim = await fetch(url, {
-
-                headers: {
-                    "User-Agent": "SistemaWade/1.0"
-                }
-
-            });
-
-            const textoNominatim =
-                await respostaNominatim.text();
-
-            console.log("Resposta do Nominatim:");
-            console.log(textoNominatim);
-
-            try {
-
-                localizacoes =
-                    JSON.parse(textoNominatim);
-
-            } catch (erro) {
-
-                console.error(
-                    "O Nominatim não retornou JSON."
-                );
-
-                continue;
-
-            }
-
-            if (localizacoes.length > 0) {
-
-                console.log(
-                    "Localização encontrada!"
-                );
-
-                break;
-
-            }
-
-            // Esperar 1 segundo antes da próxima busca
-            await new Promise(resolve =>
-                setTimeout(resolve, 1000)
-            );
-
-        }
-
-
-        // ==================================
-        // NÃO ENCONTROU
-        // ==================================
-
-        if (localizacoes.length === 0) {
-
-            return res.status(400).json({
-
-                erro:
-                    "Não foi possível localizar o CEP no mapa."
-
-            });
-
-        }
-
-
-        // ==================================
-        // LATITUDE E LONGITUDE
-        // ==================================
-
-        const latitude =
-            parseFloat(localizacoes[0].lat);
-
-        const longitude =
-            parseFloat(localizacoes[0].lon);
-
-
-        // ==================================
-        // RETORNAR DADOS
-        // ==================================
 
         res.json({
-
-            cep: cepLimpo,
-
-            endereco: endereco,
-
-            latitude: latitude,
-
-            longitude: longitude
-
+            cliente: {
+                cep: cliente.cep,
+                latitude: cliente.latitude,
+                longitude: cliente.longitude
+            },
+            vendedores
         });
-
-
     } catch (erro) {
-
-        console.error(
-            "Erro ao localizar cliente:",
-            erro
-        );
-
-        res.status(500).json({
-
-            erro:
-                "Erro ao localizar cliente."
-
-        });
-
+        responderErro(res, erro, "Erro ao buscar consultores próximos.");
     }
-
 });
 
-// ==================================
-// BUSCAR VENDEDORES MAIS PRÓXIMOS
-// ==================================
-
-app.get("/vendedores/proximos/:cep", async (req, res) => {
-
+// Busca exata por e-mail, sem expor a lista completa de contatos.
+app.get("/vendedores/email/:email", async (req, res) => {
     try {
-
-        const cep = req.params.cep;
-
-        const cepLimpo = cep.replace(/\D/g, "");
-
-        if (cepLimpo.length !== 8) {
-
-            return res.status(400).json({
-                erro: "CEP inválido."
-            });
-
+        const email = String(req.params.email || "").trim().toLowerCase();
+        if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+            return res.status(400).json({ erro: "E-mail inválido." });
         }
-
-        // ==================================
-        // LOCALIZAR CLIENTE
-        // ==================================
-
-        const respostaCliente = await fetch(
-            `${BASE_URL}/localizar/${cepLimpo}`
-        );
-
-        const cliente = await respostaCliente.json();
-
-        if (!respostaCliente.ok) {
-
-            return res.status(400).json({
-                erro: cliente.erro
-            });
-
-        }
-
-        const latitudeCliente = cliente.latitude;
-        const longitudeCliente = cliente.longitude;
-
-
-        // ==================================
-        // BUSCAR VENDEDORES
-        // ==================================
 
         const resultado = await pool.query(
-            `SELECT *
+            `SELECT ${COLUNAS_PUBLICAS}
              FROM vendedores
-             WHERE latitude IS NOT NULL
-             AND longitude IS NOT NULL`
+             WHERE LOWER(email) = $1`,
+            [email]
         );
-
-        const vendedores = resultado.rows;
-
-
-        // ==================================
-        // CALCULAR DISTÂNCIA
-        // ==================================
-
-        const distancia = (lat1, lon1, lat2, lon2) => {
-
-            const R = 6371;
-
-            const dLat =
-                (lat2 - lat1) * Math.PI / 180;
-
-            const dLon =
-                (lon2 - lon1) * Math.PI / 180;
-
-            const a =
-                Math.sin(dLat / 2) ** 2 +
-                Math.cos(lat1 * Math.PI / 180) *
-                Math.cos(lat2 * Math.PI / 180) *
-                Math.sin(dLon / 2) ** 2;
-
-            const c =
-                2 * Math.atan2(
-                    Math.sqrt(a),
-                    Math.sqrt(1 - a)
-                );
-
-            return R * c;
-
-        };
-
-
-        // ==================================
-        // ADICIONAR DISTÂNCIA
-        // ==================================
-
-        vendedores.forEach(vendedor => {
-
-            vendedor.distancia = distancia(
-
-                latitudeCliente,
-                longitudeCliente,
-
-                parseFloat(vendedor.latitude),
-                parseFloat(vendedor.longitude)
-
-            );
-
-        });
-
-
-        // ==================================
-        // ORDENAR
-        // ==================================
-
-        vendedores.sort(
-            (a, b) => a.distancia - b.distancia
-        );
-
-
-        // ==================================
-        // RETORNAR RESULTADO
-        // ==================================
-
-        res.json({
-
-            cliente: {
-
-                cep: cepLimpo,
-
-                latitude: latitudeCliente,
-
-                longitude: longitudeCliente
-
-            },
-
-            vendedores: vendedores
-
-        });
-
-
+        res.json({ vendedores: resultado.rows });
     } catch (erro) {
-
-        console.error(
-            "Erro ao buscar vendedores próximos:",
-            erro
-        );
-
-        res.status(500).json({
-
-            erro:
-                "Erro ao buscar vendedores próximos."
-
-        });
-
+        responderErro(res, erro, "Erro ao buscar consultor por e-mail.");
     }
-
 });
 
+if (require.main === module) {
+    app.listen(PORTA, "0.0.0.0", () => {
+        console.log(`Servidor Wade iniciado na porta ${PORTA}`);
+    });
+}
 
-// ==================================
-// INICIAR SERVIDOR
-// ==================================
-
-
-
-const PORT = process.env.PORT || 3000;
-
-app.listen(PORT, "0.0.0.0", () => {
-    console.log(`Servidor rodando na porta ${PORT}`);
-});
+module.exports = app;

@@ -1,18 +1,26 @@
 {
-  "name": "testemapajs",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "name": "wade-brasil",
+  "version": "1.1.0",
+  "description": "Site Wade Brasil com busca de consultores por CEP e e-mail",
+  "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node server.js",
+    "dev": "node --watch server.js",
+    "test": "node --check server.js"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "keywords": [
+    "wade",
+    "consultores",
+    "geolocalizacao"
+  ],
+  "license": "UNLICENSED",
   "type": "commonjs",
+  "engines": {
+    "node": ">=18"
+  },
   "dependencies": {
     "cors": "^2.8.6",
-    "dotenv": "^18.0.9",
+    "dotenv": "^16.4.7",
     "express": "^5.2.1",
     "pg": "^8.23.0"
   }
