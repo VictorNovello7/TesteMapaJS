@@ -106,7 +106,7 @@ function consultarNominatim(url) {
     });
 
     // Mantém a fila funcional mesmo se uma chamada falhar.
-    filaNominatim = tarefa.catch(() => {});
+    filaNominatim = tarefa.catch(() => { });
     return tarefa;
 }
 
@@ -132,6 +132,50 @@ async function localizarCep(cep) {
             endereco: item.endereco,
             latitude: Number(item.latitude),
             longitude: Number(item.longitude)
+        };
+    }
+
+    // 1.1) Procura o CEP entre os consultores já cadastrados.
+    const consultorSalvo = await pool.query(
+        `SELECT cep, latitude, longitude
+     FROM vendedores
+     WHERE regexp_replace(cep, '\\D', '', 'g') = $1
+       AND latitude IS NOT NULL
+       AND longitude IS NOT NULL
+     ORDER BY id
+     LIMIT 1`,
+        [cepLimpo]
+    );
+
+    if (consultorSalvo.rows.length) {
+        const consultor = consultorSalvo.rows[0];
+
+        const enderecoSalvo = {
+            cep: cepLimpo,
+            origem: "coordenadas_de_consultor_cadastrado"
+        };
+
+        const latitude = Number(consultor.latitude);
+        const longitude = Number(consultor.longitude);
+
+        await pool.query(
+            `INSERT INTO cep_localizacoes
+         (cep, endereco, latitude, longitude)
+         VALUES ($1, $2::jsonb, $3, $4)
+         ON CONFLICT (cep) DO NOTHING`,
+            [
+                cepLimpo,
+                JSON.stringify(enderecoSalvo),
+                latitude,
+                longitude
+            ]
+        );
+
+        return {
+            cep: cepLimpo,
+            endereco: enderecoSalvo,
+            latitude,
+            longitude
         };
     }
 
