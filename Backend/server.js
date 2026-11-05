@@ -14,7 +14,7 @@ app.use(express.json({ limit: "1mb" }));
 
 // Frontend integrado: o Render entrega o site e a API pela mesma origem.
 app.get("/", (req, res) => {
-    res.sendFile(path.join(PASTA_FRONTEND, "Main.dc.html"));
+    res.sendFile(path.join(PASTA_FRONTEND, "index.html"));
 });
 app.use(express.static(PASTA_FRONTEND));
 
