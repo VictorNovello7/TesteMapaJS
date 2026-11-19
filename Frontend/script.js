@@ -486,3 +486,37 @@
   iniciarMapa();
   carregarProdutosSanity();
 })();
+
+
+  /* ------------------------------------------------------------------
+   * Video
+   * ---------------------------------------------------------------- */
+
+function toggleVideoWade() {
+    const video = document.getElementById('videoWade');
+    const icon = document.getElementById('iconVideoWade');
+    const button = document.getElementById('btnVideoWade');
+
+    if (video.paused) {
+        video.play().then(() => {
+            icon.style.border = 'none';
+            icon.style.width = '16px';
+            icon.style.height = '24px';
+            icon.style.marginLeft = '0';
+            icon.style.background = 'linear-gradient(to right, #6B50A4 0 5px, transparent 5px 11px, #6B50A4 11px 16px)';
+            button.setAttribute('aria-label', 'Pausar vídeo');
+        }).catch(error => console.error('Erro ao reproduzir vídeo:', error));
+    } else {
+        video.pause();
+
+        icon.style.background = 'none';
+        icon.style.width = '0';
+        icon.style.height = '0';
+        icon.style.marginLeft = '6px';
+        icon.style.borderLeft = '20px solid #6B50A4';
+        icon.style.borderTop = '12px solid transparent';
+        icon.style.borderBottom = '12px solid transparent';
+
+        button.setAttribute('aria-label', 'Reproduzir vídeo');
+    }
+}
