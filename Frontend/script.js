@@ -26,7 +26,8 @@
   /* ------------------------------------------------------------------
    * Dados
    * ---------------------------------------------------------------- */
-  const PRODUTOS = [
+  // Lista local (reserva). Se o Sanity responder, ela é substituída por carregarProdutosSanity().
+  let PRODUTOS = [
     { k: 'wade', img: './assets/abfddf0539989801123f0522fc573562.png', alt: 'Pote da Máscara Rescue da Wade', bg: '#F3F0F9', fit: 'contain', pad: '40px', brand: 'WADE', name: 'Rescue Máscara', desc: 'Brilho, maciez e leveza, com buriti, murumuru e vitamina E.' },
     { k: 'befarm', img: './assets/02c73ce1f76cfb45b88bf59c2b4382da.jpg', alt: 'Embalagem de café BeFarm Origens Alta Mogiana', bg: '#F1E7DA', fit: 'cover', pad: '0', brand: 'BEFARM', name: 'Café Origens', desc: 'Alta Mogiana, em embalagem artesanal de 250 g.' },
     { k: 'bluesafe', img: './assets/9b0e1706f51404fef995dd09abcd4434.png', alt: 'Frasco do Lava Roupas Enzimático BlueSafe', bg: '#F3F0F9', fit: 'contain', pad: '28px', brand: 'BLUESAFE', name: 'Lava Roupas Enzimático', desc: 'Proteína de alta performance, cores e tecidos protegidos.' },
@@ -170,6 +171,53 @@
       escolherFiltro(link.getAttribute('data-marca'));
     });
   });
+
+  /* ------------------------------------------------------------------
+   * Produtos dinâmicos (Sanity)
+   * Lê window.WADE_SANITY (sanity-config.js). Se não houver configuração,
+   * se a requisição falhar ou vier vazia, o site mantém a lista local.
+   * ---------------------------------------------------------------- */
+  const ROTULO_MARCA = { wade: 'WADE', befarm: 'BEFARM', bluesafe: 'BLUESAFE' };
+
+  async function carregarProdutosSanity() {
+    const cfg = window.WADE_SANITY || {};
+    if (!cfg.projectId || cfg.projectId === 'SEU_PROJECT_ID') return;
+
+    const query = '*[_type == "product" && active != false] | order(order asc){' +
+      '"brand": brand, name, "desc": shortDescription, imageFit, bgColor,' +
+      '"imageUrl": image.asset->url, "alt": coalesce(image.alt, name)}';
+    const url = 'https://' + cfg.projectId + '.apicdn.sanity.io/v' + (cfg.apiVersion || '2024-01-01') +
+      '/data/query/' + (cfg.dataset || 'production') + '?query=' + encodeURIComponent(query);
+
+    try {
+      const resp = await fetch(url);
+      if (!resp.ok) throw new Error('HTTP ' + resp.status);
+      const data = await resp.json();
+      const itens = (Array.isArray(data.result) ? data.result : [])
+        .filter(function (p) { return ROTULO_MARCA[p.brand] && p.imageUrl && p.name; })
+        .map(function (p) {
+          const cover = p.imageFit === 'cover';
+          return {
+            k: p.brand,
+            img: p.imageUrl + '?w=700&auto=format',
+            alt: p.alt || p.name,
+            bg: p.bgColor || '#F3F0F9',
+            fit: cover ? 'cover' : 'contain',
+            pad: cover ? '0' : '32px',
+            brand: ROTULO_MARCA[p.brand],
+            name: p.name,
+            desc: p.desc || ''
+          };
+        });
+      if (itens.length) {
+        PRODUTOS = itens;
+        state.pIdx = 0;
+        renderProdutos();
+      }
+    } catch (e) {
+      console.warn('[Sanity] não foi possível carregar os produtos; usando a lista local.', e);
+    }
+  }
 
   /* ------------------------------------------------------------------
    * Linha do tempo
@@ -436,4 +484,5 @@
   renderFaq();
   renderBusca();
   iniciarMapa();
+  carregarProdutosSanity();
 })();
