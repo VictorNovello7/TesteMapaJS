@@ -236,13 +236,18 @@
     $('tl-text').textContent = atual.text;
   }
 
-  $('tl-nodes').addEventListener('click', function (e) {
-    const btn = e.target.closest('button[data-tl]');
-    if (!btn) return;
-    state.tl = Number(btn.getAttribute('data-tl'));
-    renderTimeline();
-    manterFoco($('tl-nodes'), 'button[data-tl="' + state.tl + '"]');
-  });
+  const timelineNodes = $('tl-nodes');
+
+  if (timelineNodes) {
+    timelineNodes.addEventListener('click', function (e) {
+      const btn = e.target.closest('button[data-tl]');
+      if (!btn) return;
+
+      state.tl = Number(btn.getAttribute('data-tl'));
+      renderTimeline();
+      manterFoco(timelineNodes, 'button[data-tl="' + state.tl + '"]');
+    });
+  }
 
   /* ------------------------------------------------------------------
    * FAQ
@@ -480,7 +485,6 @@
    * Inicialização
    * ---------------------------------------------------------------- */
   renderProdutos();
-  renderTimeline();
   renderFaq();
   renderBusca();
   iniciarMapa();
@@ -488,26 +492,26 @@
 })();
 
 
-  /* ------------------------------------------------------------------
-   * Video
-   * ---------------------------------------------------------------- */
+/* ------------------------------------------------------------------
+ * Video
+ * ---------------------------------------------------------------- */
 function abrirVideoWade() {
-    const modal = document.getElementById('modalVideoWade');
-    const video = document.getElementById('videoWadeExpandido');
+  const modal = document.getElementById('modalVideoWade');
+  const video = document.getElementById('videoWadeExpandido');
 
-    modal.style.display = 'flex';
-    document.body.style.overflow = 'hidden';
+  modal.style.display = 'flex';
+  document.body.style.overflow = 'hidden';
 
-    video.play().catch(error => console.error(error));
+  video.play().catch(error => console.error(error));
 }
 
 function fecharVideoWade() {
-    const modal = document.getElementById('modalVideoWade');
-    const video = document.getElementById('videoWadeExpandido');
+  const modal = document.getElementById('modalVideoWade');
+  const video = document.getElementById('videoWadeExpandido');
 
-    video.pause();
-    video.currentTime = 0;
+  video.pause();
+  video.currentTime = 0;
 
-    modal.style.display = 'none';
-    document.body.style.overflow = '';
+  modal.style.display = 'none';
+  document.body.style.overflow = '';
 }
