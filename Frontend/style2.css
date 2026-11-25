@@ -1,0 +1,71 @@
+.top {
+  background: radial-gradient(900px 500px at 85% 20%, rgba(88, 200, 192, .28), transparent 60%), linear-gradient(160deg, #6B50A4 0%, #523C8E 55%, #3F2E73 100%)
+}
+
+body {
+  margin: 0;
+  font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+  color: #0B0B0F;
+  background: #fff
+}
+
+a {
+  color: #0B0B0F;
+  text-decoration: none
+}
+
+a:hover {
+  color: #6B50A4
+}
+
+.snap {
+  scroll-snap-type: x mandatory;
+  scrollbar-width: thin
+}
+
+.snap>* {
+  scroll-snap-align: start
+}
+
+.faqbg {
+  background: linear-gradient(rgba(247, 244, 251, .2), rgba(247, 244, 251, .2)), url(./assets/4e15b4c64f301b3a6fe4eb34a0f42b69.jpg) center/cover no-repeat
+}
+
+@keyframes orbitSpin {
+  to {
+    transform: rotate(360deg)
+  }
+}
+
+@keyframes orbitKeep {
+  to {
+    transform: rotate(-360deg)
+  }
+}
+
+.orbit {
+  animation: orbitSpin 60s linear infinite
+}
+
+.keep {
+  animation: orbitKeep 60s linear infinite
+}
+
+@media (prefers-reduced-motion: reduce) {
+
+  .orbit,
+  .keep {
+    animation: none
+  }
+}
+
+.navlink {
+  color: #fff;
+  font-weight: 500;
+  font-size: 15px
+}
+
+.navlink:hover {
+  color: #BFE3E1
+}
+

@@ -69,3 +69,401 @@ a:hover {
   color: #BFE3E1
 }
 
+
+/* =========================================================
+   WADE BRASIL — RESPONSIVIDADE REFINADA
+   Apenas apresentação visual; não altera HTML ou JavaScript.
+   ========================================================= */
+
+:root {
+  --wade-purple: #6B50A4;
+  --wade-purple-deep: #3F2E73;
+  --wade-mint: #58C8C0;
+  --wade-ink: #0B0B0F;
+  --wade-muted: #62606B;
+  --wade-lilac: #F7F4FB;
+  --wade-line: #EAE5F1;
+  --wade-shadow: 0 18px 50px rgba(47, 31, 83, .10);
+}
+
+* { box-sizing: border-box; }
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 24px;
+}
+
+body {
+  margin: 0;
+  overflow-x: clip;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+img, video, iframe { max-width: 100%; }
+button, input, textarea, select { font: inherit; }
+button, a { -webkit-tap-highlight-color: transparent; }
+h1, h2, h3, p { text-wrap: pretty; }
+
+a, button, article {
+  transition: color .2s ease, background-color .2s ease, border-color .2s ease,
+              box-shadow .2s ease, transform .2s ease, opacity .2s ease;
+}
+
+a:focus-visible, button:focus-visible, input:focus-visible,
+textarea:focus-visible, select:focus-visible {
+  outline: 3px solid rgba(88, 200, 192, .8);
+  outline-offset: 3px;
+}
+
+button { cursor: pointer; }
+
+/* Superfícies e hierarquia */
+article {
+  border: 1px solid rgba(107, 80, 164, .07);
+  box-shadow: 0 12px 32px rgba(47, 31, 83, .07);
+}
+
+article:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--wade-shadow);
+}
+
+section[id] { scroll-margin-top: 20px; }
+
+/* Hero */
+#topo {
+  isolation: isolate;
+  position: relative;
+}
+
+#topo > header {
+  width: 100%;
+  padding-top: 18px !important;
+  padding-bottom: 18px !important;
+}
+
+#topo > header nav { align-items: center; }
+
+#topo > header nav a {
+  position: relative;
+  text-decoration: none;
+}
+
+#topo > header nav a::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 100%;
+  bottom: -7px;
+  height: 2px;
+  border-radius: 2px;
+  background: var(--wade-mint);
+  transition: right .2s ease;
+}
+
+#topo > header nav a:hover::after { right: 0; }
+
+#topo > header > a:last-child,
+#topo > section a {
+  box-shadow: 0 8px 22px rgba(15, 10, 35, .12);
+}
+
+#topo > header > a:last-child:hover,
+#topo > section a:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 28px rgba(15, 10, 35, .18);
+}
+
+/* Botões, filtros e campos */
+input, textarea, select {
+  max-width: 100%;
+}
+
+button {
+  touch-action: manipulation;
+}
+
+#consultores #busca {
+  min-width: 0;
+  border: 1px solid var(--wade-line) !important;
+  border-radius: 16px !important;
+  transition: border-color .2s ease, box-shadow .2s ease;
+}
+
+#consultores #busca:focus {
+  border-color: var(--wade-purple) !important;
+  box-shadow: 0 0 0 4px rgba(107, 80, 164, .12);
+}
+
+/* Localizador e mapa */
+#consultores #wade-map {
+  width: 100%;
+  height: 100%;
+  min-height: 480px;
+  overflow: hidden;
+  border-radius: inherit;
+}
+
+#consultores .leaflet-container {
+  width: 100%;
+  height: 100%;
+  min-height: 480px;
+  border-radius: inherit;
+  font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+  background: #EEF1F4;
+  z-index: 1;
+}
+
+#consultores .leaflet-control-zoom {
+  border: 0 !important;
+  box-shadow: 0 4px 16px rgba(22, 18, 35, .16) !important;
+  overflow: hidden;
+  border-radius: 12px !important;
+}
+
+#consultores .leaflet-control-zoom a {
+  color: var(--wade-purple) !important;
+  border: 0 !important;
+}
+
+#consultores .leaflet-popup-content-wrapper {
+  border-radius: 14px;
+  box-shadow: 0 8px 28px rgba(20, 15, 35, .16);
+}
+
+#consultores .leaflet-popup-content {
+  margin: 13px 16px;
+  line-height: 1.55;
+}
+
+#consultores .leaflet-control-attribution {
+  font-size: 10px;
+}
+
+/* Tablets e notebooks menores */
+@media (max-width: 1024px) {
+  #topo > header {
+    padding-left: 30px !important;
+    padding-right: 30px !important;
+    gap: 18px !important;
+  }
+
+  #topo > header nav { gap: 18px !important; }
+
+  #topo > section {
+    padding: 38px 30px 76px !important;
+    gap: 34px !important;
+  }
+
+  #topo h1 {
+    font-size: clamp(42px, 5.5vw, 58px) !important;
+  }
+
+  #marcas, #produtos, #proposito, #historia,
+  #app, #consultores, #faq, #contato {
+    padding-top: 76px !important;
+    padding-bottom: 76px !important;
+  }
+
+  #marcas > div, #produtos > div, #proposito > div,
+  #historia > div, #app > div, #consultores > div,
+  #faq > div, #contato > div, footer > div {
+    padding-left: 30px !important;
+    padding-right: 30px !important;
+  }
+
+  #consultores > div { gap: 28px !important; }
+}
+
+/* Celular */
+@media (max-width: 680px) {
+  body { font-size: 15px; }
+
+  #topo > header {
+    padding: 16px 20px !important;
+    justify-content: center !important;
+    gap: 14px 18px !important;
+  }
+
+  #topo > header > a:first-child { margin-right: auto; }
+  #topo > header > a:first-child img { height: 42px !important; }
+
+  #topo > header nav {
+    order: 3;
+    width: 100%;
+    justify-content: center;
+    gap: 10px 18px !important;
+  }
+
+  #topo > header nav a { font-size: 12px !important; }
+
+  #topo > header > a:last-child {
+    min-height: 40px !important;
+    padding: 0 16px !important;
+    font-size: 13px !important;
+  }
+
+  #topo > section {
+    padding: 30px 20px 58px !important;
+    gap: 30px !important;
+  }
+
+  #topo h1 {
+    font-size: clamp(35px, 9.4vw, 48px) !important;
+    line-height: 1.07 !important;
+    letter-spacing: -1.6px !important;
+  }
+
+  #topo > section p {
+    font-size: 16px !important;
+    line-height: 1.65 !important;
+  }
+
+  #topo > section > div:first-child { gap: 20px !important; }
+
+  #topo > section > div:first-child > div:last-child {
+    gap: 18px !important;
+  }
+
+  #topo > section > div:last-child > div {
+    width: min(430px, 100%) !important;
+  }
+
+  #topo .orbit a span:first-child {
+    font-size: clamp(13px, 4vw, 19px) !important;
+  }
+
+  #topo .orbit a span:last-child { font-size: 10px !important; }
+
+  #marcas, #produtos, #proposito, #historia,
+  #app, #consultores, #faq, #contato {
+    padding-top: 58px !important;
+    padding-bottom: 58px !important;
+  }
+
+  #marcas > div, #produtos > div, #proposito > div,
+  #historia > div, #app > div, #consultores > div,
+  #faq > div, #contato > div, footer > div {
+    padding-left: 20px !important;
+    padding-right: 20px !important;
+    gap: 26px !important;
+  }
+
+  section h2 {
+    font-size: clamp(29px, 8vw, 38px) !important;
+    line-height: 1.12 !important;
+    letter-spacing: -1px !important;
+  }
+
+  #marcas p, #produtos p, #proposito p, #historia p,
+  #app p, #consultores p, #faq p, #contato p {
+    font-size: 15px !important;
+    line-height: 1.65 !important;
+  }
+
+  #marcas > div > div:last-child {
+    grid-template-columns: minmax(0, 1fr) !important;
+    gap: 18px !important;
+  }
+
+  #marcas article { border-radius: 22px !important; }
+  #marcas article > div:last-child { padding: 22px !important; }
+
+  #produtos [style*="grid-template-columns"] {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  }
+
+  #consultores > div { gap: 22px !important; }
+  #consultores > div > div:first-child { gap: 16px !important; }
+
+  #consultores > div > div:first-child > div:nth-of-type(1) {
+    flex-wrap: wrap !important;
+  }
+
+  #consultores #btn-cep, #consultores #btn-mail {
+    flex: 1 1 125px;
+    min-height: 46px !important;
+    padding: 8px 12px !important;
+    font-size: 13px !important;
+  }
+
+  #consultores > div > div:first-child > div:nth-of-type(2) {
+    flex-direction: column !important;
+    gap: 10px !important;
+  }
+
+  #consultores #busca, #consultores #btn-buscar {
+    width: 100% !important;
+    min-height: 52px !important;
+  }
+
+  #consultores > div > div:last-child {
+    width: 100% !important;
+    height: 390px !important;
+    min-height: 390px !important;
+    border-radius: 22px !important;
+    overflow: hidden;
+  }
+
+  #consultores #wade-map,
+  #consultores .leaflet-container {
+    min-height: 390px !important;
+    height: 100% !important;
+  }
+
+  #wade-map-hint {
+    left: 10px !important;
+    right: 10px !important;
+    bottom: 10px !important;
+    max-width: calc(100% - 20px);
+    border-radius: 12px !important;
+    font-size: 10px !important;
+    line-height: 1.4;
+  }
+
+  #resultados { width: 100%; min-width: 0; }
+
+  #contato form,
+  #contato [style*="display:grid"] {
+    grid-template-columns: minmax(0, 1fr) !important;
+  }
+
+  footer { padding-top: 42px !important; }
+
+  /* Áreas clicáveis confortáveis em telas touch */
+  #prod-prev, #prod-next { width: 46px !important; height: 46px !important; }
+  #faq button, #faq [role="button"] { min-height: 46px; }
+}
+
+/* Celulares compactos */
+@media (max-width: 390px) {
+  #topo > header { padding-left: 16px !important; padding-right: 16px !important; }
+  #topo > header nav { gap: 9px 12px !important; }
+  #topo > header nav a { font-size: 11px !important; }
+
+  #topo > section { padding-left: 16px !important; padding-right: 16px !important; }
+
+  #marcas > div, #produtos > div, #proposito > div,
+  #historia > div, #app > div, #consultores > div,
+  #faq > div, #contato > div, footer > div {
+    padding-left: 16px !important;
+    padding-right: 16px !important;
+  }
+
+  #consultores > div > div:last-child,
+  #consultores .leaflet-container,
+  #consultores #wade-map {
+    height: 340px !important;
+    min-height: 340px !important;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    transition-duration: .01ms !important;
+    animation-duration: .01ms !important;
+    animation-iteration-count: 1 !important;
+  }
+}
